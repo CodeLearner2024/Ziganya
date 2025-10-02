@@ -1,6 +1,6 @@
 package com.codeLearner.Ziganya.exceptionhandling.handler;
 
-import com.codeLearner.Ziganya.config.i18n.LocalizationService;
+import com.codeLearner.Ziganya.i18n.LocalizationService;
 import com.codeLearner.Ziganya.exceptionhandling.exception.ApiExceptionMessage;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import org.springframework.beans.factory.annotation.Autowired;

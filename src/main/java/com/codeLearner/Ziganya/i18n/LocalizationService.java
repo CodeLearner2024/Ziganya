@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.config.i18n;
+package com.codeLearner.Ziganya.i18n;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
