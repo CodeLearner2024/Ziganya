@@ -1,0 +1,10 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /ziganya-managment-system/api/v1
+spring:
+  application:
+    name: ziganya-service
+  profiles:
+    active: dev
+
