@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://ep-empty-river-ad7lhqyj-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    url: jdbc:postgresql://ep-crimson-leaf-a1ao1472-pooler.ap-southeast-1.aws.neon.tech/ziganya?sslmode=require&channel_binding=require
     driver-class-name: org.postgresql.Driver
     username: neondb_owner
-    password: npg_cdJx1WMZ4lyP
+    password: npg_GflbkOC6j4uL
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
