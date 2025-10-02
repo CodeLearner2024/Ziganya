@@ -19,6 +19,9 @@ public class AssociationDetailsServiceImpl implements AssociationDetailsService{
     public AssociationDetailsResponse addAssociationDetails(AssociationDetailsRequest associationDetailsRequest) {
         AssociationDetails associationDetails = associationDetailsConverter.converterToEntity(associationDetailsRequest);
         associationDetails.setId(1L);
+        if(associationDetailsRequest.getName().isBlank()){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_ASSOCIATION_BLANK_NAME_KEY,I18nConstants.NO_ASSOCIATION_BLANK_NAME,I18nConstants.NO_ASSOCIATION_BLANK_NAME);
+        }
         AssociationDetails savedAssociationDetails = associationDetailsRepository.save(associationDetails);
         return associationDetailsConverter.converterToResponse(savedAssociationDetails);
     }
