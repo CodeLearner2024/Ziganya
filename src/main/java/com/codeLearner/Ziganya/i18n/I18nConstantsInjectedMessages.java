@@ -16,4 +16,5 @@ public class I18nConstantsInjectedMessages {
     public static final String MEMBER_PHONE_NUMBER_BLANK_KEY = "message.element.member.phonenumber.blank";
     public static final String MEMBER_MANY_OF_ACTIONS_LESS_THAN_ONE_KEY = "message.element.member.manyofactions.lessthanone";
     public static final String MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS_KEY = "message.element.member.manyofactions.greaterthanmaxofactions";
+    public static final String NO_ASSOCIATION_ACCOUNT_FOUND_KEY = "message.element.no.associationaccount.found";
 }
