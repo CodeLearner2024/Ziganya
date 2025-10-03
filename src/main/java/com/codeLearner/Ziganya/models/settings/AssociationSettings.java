@@ -16,11 +16,12 @@ public class AssociationSettings {
     private LocalDate cycleStartDate;
     private LocalDate cycleEndDate;
     private Integer timesOfContributionForCredit;
+    private Integer maxOfActions;
 
     public AssociationSettings() {
     }
 
-    public AssociationSettings(Long id, Double contributionAmount, Integer manyOfMemberShipFee, Double latePaymentPenalityInPercentage, LocalDate cycleStartDate, LocalDate cycleEndDate, Integer timesOfContributionForCredit) {
+    public AssociationSettings(Long id, Double contributionAmount, Integer manyOfMemberShipFee, Double latePaymentPenalityInPercentage, LocalDate cycleStartDate, LocalDate cycleEndDate, Integer timesOfContributionForCredit, Integer maxOfActions) {
         this.id = id;
         this.contributionAmount = contributionAmount;
         this.manyOfMemberShipFee = manyOfMemberShipFee;
@@ -28,6 +29,7 @@ public class AssociationSettings {
         this.cycleStartDate = cycleStartDate;
         this.cycleEndDate = cycleEndDate;
         this.timesOfContributionForCredit = timesOfContributionForCredit;
+        this.maxOfActions = maxOfActions;
     }
 
     public Long getId() {
@@ -84,5 +86,13 @@ public class AssociationSettings {
 
     public void setTimesOfContributionForCredit(Integer timesOfContributionForCredit) {
         this.timesOfContributionForCredit = timesOfContributionForCredit;
+    }
+
+    public Integer getMaxOfActions() {
+        return maxOfActions;
+    }
+
+    public void setMaxOfActions(Integer maxOfActions) {
+        this.maxOfActions = maxOfActions;
     }
 }

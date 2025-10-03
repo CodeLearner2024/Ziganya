@@ -1,11 +1,14 @@
 package com.codeLearner.Ziganya.models.member;
 
 
+import jakarta.validation.constraints.NotBlank;
+
 public class MemberRequest {
     private String firstname;
     private String lastname;
     private String  phoneNumber;
     private Integer manyOfActions;
+
 
     public MemberRequest() {
 
