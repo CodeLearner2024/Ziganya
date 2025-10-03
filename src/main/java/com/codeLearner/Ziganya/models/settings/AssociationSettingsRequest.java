@@ -1,14 +1,19 @@
 package com.codeLearner.Ziganya.models.settings;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class AssociationSettingsRequest {
+    @NotNull(message = "contribution amount must be provided")
     private Double contributionAmount;
+    @NotNull(message = "how much fee for membership")
     private Integer manyOfMemberShipFee;
     private Double latePaymentPenalityInPercentage;
     private LocalDate cycleStartDate;
     private LocalDate cycleEndDate;
     private Integer timesOfContributionForCredit;
+    private Integer manyOfActions;
 
     public AssociationSettingsRequest() {
 
@@ -69,5 +74,13 @@ public class AssociationSettingsRequest {
 
     public void setTimesOfContributionForCredit(Integer timesOfContributionForCredit) {
         this.timesOfContributionForCredit = timesOfContributionForCredit;
+    }
+
+    public Integer getManyOfActions() {
+        return manyOfActions;
+    }
+
+    public void setManyOfActions(Integer manyOfActions) {
+        this.manyOfActions = manyOfActions;
     }
 }
