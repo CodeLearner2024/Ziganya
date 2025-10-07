@@ -10,6 +10,8 @@ public class AssociationSettingsResponse {
     private LocalDate cycleStartDate;
     private LocalDate cycleEndDate;
     private Integer timesOfContributionForCredit;
+    private Integer maxOfActions;
+
 
     public AssociationSettingsResponse() {
     }
@@ -78,5 +80,13 @@ public class AssociationSettingsResponse {
 
     public void setTimesOfContributionForCredit(Integer timesOfContributionForCredit) {
         this.timesOfContributionForCredit = timesOfContributionForCredit;
+    }
+
+    public Integer getMaxOfActions() {
+        return maxOfActions;
+    }
+
+    public void setMaxOfActions(Integer maxOfActions) {
+        this.maxOfActions = maxOfActions;
     }
 }

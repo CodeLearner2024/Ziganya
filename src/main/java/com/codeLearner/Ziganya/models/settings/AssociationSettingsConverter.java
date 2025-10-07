@@ -8,6 +8,7 @@ public class AssociationSettingsConverter {
     public AssociationSettingsResponse convertToResponse(AssociationSettings associationSettings){
         AssociationSettingsResponse response = new AssociationSettingsResponse();
         response.setId(associationSettings.getId());
+        response.setMaxOfActions(associationSettings.getMaxOfActions());
         response.setContributionAmount(associationSettings.getContributionAmount());
         response.setCycleStartDate(associationSettings.getCycleStartDate());
         response.setCycleEndDate(associationSettings.getCycleEndDate());
@@ -25,6 +26,7 @@ public class AssociationSettingsConverter {
         associationSettings.setManyOfMemberShipFee(request.getManyOfMemberShipFee());
         associationSettings.setLatePaymentPenalityInPercentage(request.getLatePaymentPenalityInPercentage());
         associationSettings.setTimesOfContributionForCredit(request.getTimesOfContributionForCredit());
+        associationSettings.setMaxOfActions(request.getMaxOfActions());
         return associationSettings;
     }
 }
