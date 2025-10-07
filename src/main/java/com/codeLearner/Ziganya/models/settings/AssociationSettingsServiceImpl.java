@@ -23,6 +23,7 @@ public class AssociationSettingsServiceImpl implements AssociationSettingsServic
     @Override
     public AssociationSettingsResponse createAssociationSettings(AssociationSettingsRequest associationSettingsRequest) {
         AssociationSettings associationSettings = associationSettingsConverter.convertToEntity(associationSettingsRequest);
+        associationSettings.setId(1L);
         AssociationSettings savedAssociationSettings = associationSettingsRepository.save(associationSettings);
         return associationSettingsConverter.convertToResponse(savedAssociationSettings);
     }
@@ -36,6 +37,7 @@ public class AssociationSettingsServiceImpl implements AssociationSettingsServic
     public AssociationSettingsResponse updateAssociationSettings(Long id, AssociationSettingsRequest associationSettingsRequest) {
 
         return associationSettingsRepository.findById(id).map(associationSettings -> {
+            associationSettings.setId(1L);
             if (associationSettingsRequest.getContributionAmount() != null) {
                 associationSettings.setContributionAmount(associationSettingsRequest.getContributionAmount());
             }
