@@ -18,6 +18,7 @@ public class AssociationSettings {
     private Integer timesOfContributionForCredit;
     private Integer maxOfActions;
 
+
     public AssociationSettings() {
     }
 

@@ -16,5 +16,7 @@ public class I18nConstants {
     public static final String MEMBER_MANY_OF_ACTIONS_LESS_THAN_ONE = "message.element.member.manyofactions.lessthanone";
     public static final String MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS = "message.element.member.manyofactions.greaterthanmaxofactions";
     public static final String NO_ASSOCIATION_ACCOUNT_FOUND = "message.element.no.associationaccount.found";
+    public static final String CONTRIBUTION_NOT_FOUND = "message.element.contribution.not.found";
+    public static final String CONTRIBUTION_AMOUNT_NOT_VALID = "message.element.contribution.amount.not.valid";
 
 }

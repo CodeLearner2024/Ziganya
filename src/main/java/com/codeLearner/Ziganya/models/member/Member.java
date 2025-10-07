@@ -1,6 +1,10 @@
 package com.codeLearner.Ziganya.models.member;
 
+import com.codeLearner.Ziganya.models.contribution.Contribution;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "members")
@@ -12,6 +16,10 @@ public class Member {
     private String lastname;
     private String  phoneNumber;
     private Integer manyOfActions;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Contribution> contributions;
 
     public Member() {
     }
@@ -63,5 +71,13 @@ public class Member {
 
     public void setManyOfActions(Integer manyOfActions) {
         this.manyOfActions = manyOfActions;
+    }
+
+    public List<Contribution> getContributions() {
+        return contributions;
+    }
+
+    public void setContributions(List<Contribution> contributions) {
+        this.contributions = contributions;
     }
 }
