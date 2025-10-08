@@ -2,11 +2,16 @@ package com.codeLearner.Ziganya.models.member;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class MemberRequest {
+    @NotBlank(message = "First name must be provided")
     private String firstname;
+    @NotBlank(message = "Last name must be provided")
     private String lastname;
+    @NotBlank(message = "Phone number must be provided")
     private String  phoneNumber;
+    @NotNull(message = "Many of actions must be provided")
     private Integer manyOfActions;
 
 

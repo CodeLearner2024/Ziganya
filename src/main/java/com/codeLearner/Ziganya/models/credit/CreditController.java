@@ -1,6 +1,7 @@
 package com.codeLearner.Ziganya.models.credit;
 
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class CreditController {
     }
 
     @PostMapping
-    public ResponseEntity<CreditResponse> createCredit(@RequestBody CreditRequest request) {
+    public ResponseEntity<CreditResponse> createCredit(@Valid @RequestBody CreditRequest request) {
         CreditResponse response = creditService.createCredit(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

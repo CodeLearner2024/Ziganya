@@ -1,8 +1,11 @@
 package com.codeLearner.Ziganya.models.assotiationdetails;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDate;
 
 public class AssociationDetailsRequest {
+    @NotBlank(message = "Association name must be provided")
     private String name;
     private String email;
     private String contact;

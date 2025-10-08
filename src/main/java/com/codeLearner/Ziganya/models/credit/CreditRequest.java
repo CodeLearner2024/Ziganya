@@ -1,11 +1,15 @@
 package com.codeLearner.Ziganya.models.credit;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class CreditRequest {
+    @NotNull(message = "Credit amount must be provided")
     private Double amount;
     private LocalDate creditDate;
     private Double interestRate;
+    @NotNull(message = "Member must be provided")
     private Long memberId;
 
     public CreditRequest() {

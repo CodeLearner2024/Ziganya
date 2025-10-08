@@ -19,5 +19,6 @@ public class I18nConstants {
     public static final String CONTRIBUTION_NOT_FOUND = "message.element.contribution.not.found";
     public static final String CONTRIBUTION_AMOUNT_NOT_VALID = "message.element.contribution.amount.not.valid";
     public static final String CREDIT_NOT_FOUND = "message.element.credit.not.found";
+    public static final String CREDIT_MEMBER_MUST_BE_PROVIDED = "message.element.credit.member.must.be.provided";
 
 }

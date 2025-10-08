@@ -1,11 +1,15 @@
 package com.codeLearner.Ziganya.models.contribution;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class ContributionRequest {
     private LocalDate contributionDate;
+    @NotNull(message = "Amount of contribution must be provided")
     private Double amount;
     private String description;
+    @NotNull(message = "Member must be provided")
     private Long memberId;
 
     public ContributionRequest() {

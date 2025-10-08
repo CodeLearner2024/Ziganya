@@ -20,4 +20,5 @@ public class I18nConstantsInjectedMessages {
     public static final String CONTRIBUTION_NOT_FOUND_KEY = "message.element.contribution.not.found";
     public static final String CONTRIBUTION_AMOUNT_NOT_VALID_KEY = "message.element.contribution.amount.not.valid";
     public static final String CREDIT_NOT_FOUND_KEY = "message.element.credit.not.found";
+    public static final String CREDIT_MEMBER_MUST_BE_PROVIDED_KEY = "message.element.credit.member.must.be.provided";
 }

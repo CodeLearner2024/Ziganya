@@ -1,6 +1,7 @@
 package com.codeLearner.Ziganya.models.contribution;
 
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ContributionController {
     }
 
     @PostMapping
-    public ResponseEntity<ContributionResponse> createContribution(@RequestBody ContributionRequest request) {
+    public ResponseEntity<ContributionResponse> createContribution(@Valid @RequestBody ContributionRequest request) {
         ContributionResponse contributionResponse = contributionService.createContribution(request);
         return new ResponseEntity<>(contributionResponse, HttpStatus.CREATED);
     }

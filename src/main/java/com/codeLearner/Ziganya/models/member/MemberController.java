@@ -1,6 +1,7 @@
 package com.codeLearner.Ziganya.models.member;
 
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest request) {
+    public ResponseEntity<MemberResponse> createMember(@Valid @RequestBody MemberRequest request) {
         MemberResponse memberResponse = memberService.createMember(request);
         return  new ResponseEntity<>(memberResponse, HttpStatus.CREATED);
 

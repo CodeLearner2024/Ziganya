@@ -25,7 +25,11 @@ public class CreditServiceImpl implements CreditService{
 
     @Override
     public CreditResponse createCredit(CreditRequest request) {
+
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
+        if(member == null){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_MEMBER_MUST_BE_PROVIDED_KEY,I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED,I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED);
+        }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);
         Credit savedCredit = creditRepository.save(credit);
