@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.settings;
 
+import com.codeLearner.Ziganya.models.enums.InterestFrequency;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,8 @@ public class AssociationSettings {
     private LocalDate cycleEndDate;
     private Integer timesOfContributionForCredit;
     private Integer maxOfActions;
+    private Double creditRate;
+    private InterestFrequency interestFrequency;
 
 
     public AssociationSettings() {
@@ -96,5 +99,21 @@ public class AssociationSettings {
 
     public void setMaxOfActions(Integer maxOfActions) {
         this.maxOfActions = maxOfActions;
+    }
+
+    public Double getCreditRate() {
+        return creditRate;
+    }
+
+    public void setCreditRate(Double creditRate) {
+        this.creditRate = creditRate;
+    }
+
+    public InterestFrequency getInterestFrequency() {
+        return interestFrequency;
+    }
+
+    public void setInterestFrequency(InterestFrequency interestFrequency) {
+        this.interestFrequency = interestFrequency;
     }
 }

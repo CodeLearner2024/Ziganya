@@ -14,6 +14,8 @@ public class AssociationSettingsConverter {
         response.setCycleEndDate(associationSettings.getCycleEndDate());
         response.setManyOfMemberShipFee(associationSettings.getManyOfMemberShipFee());
         response.setLatePaymentPenalityInPercentage(associationSettings.getLatePaymentPenalityInPercentage());
+        response.setInterestFrequency(associationSettings.getInterestFrequency());
+        response.setCreditRate(associationSettings.getCreditRate());
         return response;
     }
 
@@ -27,6 +29,8 @@ public class AssociationSettingsConverter {
         associationSettings.setLatePaymentPenalityInPercentage(request.getLatePaymentPenalityInPercentage());
         associationSettings.setTimesOfContributionForCredit(request.getTimesOfContributionForCredit());
         associationSettings.setMaxOfActions(request.getMaxOfActions());
+        associationSettings.setCreditRate(request.getCreditRate());
+        associationSettings.setInterestFrequency(request.getInterestFrequency());
         return associationSettings;
     }
 }

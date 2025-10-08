@@ -1,5 +1,7 @@
 package com.codeLearner.Ziganya.models.settings;
 
+import com.codeLearner.Ziganya.models.enums.InterestFrequency;
+
 import java.time.LocalDate;
 
 public class AssociationSettingsResponse {
@@ -11,6 +13,10 @@ public class AssociationSettingsResponse {
     private LocalDate cycleEndDate;
     private Integer timesOfContributionForCredit;
     private Integer maxOfActions;
+    private Double creditRate;
+    private InterestFrequency interestFrequency;
+
+
 
 
     public AssociationSettingsResponse() {
@@ -88,5 +94,21 @@ public class AssociationSettingsResponse {
 
     public void setMaxOfActions(Integer maxOfActions) {
         this.maxOfActions = maxOfActions;
+    }
+
+    public Double getCreditRate() {
+        return creditRate;
+    }
+
+    public void setCreditRate(Double creditRate) {
+        this.creditRate = creditRate;
+    }
+
+    public InterestFrequency getInterestFrequency() {
+        return interestFrequency;
+    }
+
+    public void setInterestFrequency(InterestFrequency interestFrequency) {
+        this.interestFrequency = interestFrequency;
     }
 }

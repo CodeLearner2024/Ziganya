@@ -7,6 +7,8 @@ public class CreditResponse {
     private Double amount;
     private LocalDate creditDate;
     private Double interestRate;
+    private Double totalAmountToPay;
+
 
     public CreditResponse() {
     }
@@ -48,5 +50,13 @@ public class CreditResponse {
 
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public Double getTotalAmountToPay() {
+        return totalAmountToPay;
+    }
+
+    public void setTotalAmountToPay(Double totalAmountToPay) {
+        this.totalAmountToPay = totalAmountToPay;
     }
 }

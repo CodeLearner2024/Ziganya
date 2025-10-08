@@ -3,6 +3,8 @@ package com.codeLearner.Ziganya.models.contribution;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
+import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.codeLearner.Ziganya.models.member.MemberRepository;
 import com.codeLearner.Ziganya.models.settings.AssociationSettings;
@@ -18,16 +20,19 @@ public class ContributionServiceImpl implements ContributionService {
     private final ContributionConverter contributionConverter;
     private final AssociationSettingsRepository associationSettingsRepository;
     private final MemberRepository memberRepository;
+    private final AssociationAccountRepository associationAccountRepository;
 
-    public ContributionServiceImpl(ContributionRepository contributionRepository, ContributionConverter contributionConverter, AssociationSettingsRepository associationSettingsRepository, MemberRepository memberRepository) {
+    public ContributionServiceImpl(ContributionRepository contributionRepository, ContributionConverter contributionConverter, AssociationSettingsRepository associationSettingsRepository, MemberRepository memberRepository, AssociationAccountRepository associationAccountRepository) {
         this.contributionRepository = contributionRepository;
         this.contributionConverter = contributionConverter;
         this.associationSettingsRepository = associationSettingsRepository;
         this.memberRepository = memberRepository;
+        this.associationAccountRepository = associationAccountRepository;
     }
 
     @Override
     public ContributionResponse createContribution(ContributionRequest request) {
+        AssociationAccount associationAccount = associationAccountRepository.findCurrentAssociationAccount();
         AssociationSettings associationSettings = associationSettingsRepository.findById(1L).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.ASSOCIATION_SETTINGS_NOT_FOUND_KEY, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND));
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
         Contribution contribution = contributionConverter.convertToEntity(request);
@@ -35,6 +40,8 @@ public class ContributionServiceImpl implements ContributionService {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_AMOUNT_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID);
         }
         contribution.setMember(member);
+        associationAccount.setCurrentAmount(associationAccount.getCurrentAmount()+ request.getAmount());
+        associationAccountRepository.save(associationAccount);
         Contribution savedContribution = contributionRepository.save(contribution);
         return contributionConverter.convertToResponse(savedContribution);
     }
