@@ -1,5 +1,7 @@
 package com.codeLearner.Ziganya.models.credit;
 
+import com.codeLearner.Ziganya.models.enums.Decision;
+
 import java.time.LocalDate;
 
 public class CreditResponse {
@@ -8,6 +10,8 @@ public class CreditResponse {
     private LocalDate creditDate;
     private Double interestRate;
     private Double totalAmountToPay;
+    private Decision creditDecision;
+
 
 
     public CreditResponse() {
@@ -58,5 +62,13 @@ public class CreditResponse {
 
     public void setTotalAmountToPay(Double totalAmountToPay) {
         this.totalAmountToPay = totalAmountToPay;
+    }
+
+    public Decision getCreditDecision() {
+        return creditDecision;
+    }
+
+    public void setCreditDecision(Decision creditDecision) {
+        this.creditDecision = creditDecision;
     }
 }

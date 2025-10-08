@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.credit;
 
+import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ public class Credit {
     private Double amount;
     private LocalDate creditDate;
     private Double interestRate;
+    private Decision creditDecision;
 
     @ManyToOne
     @JsonManagedReference
@@ -69,5 +71,13 @@ public class Credit {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Decision getCreditDecision() {
+        return creditDecision;
+    }
+
+    public void setCreditDecision(Decision creditDecision) {
+        this.creditDecision = creditDecision;
     }
 }

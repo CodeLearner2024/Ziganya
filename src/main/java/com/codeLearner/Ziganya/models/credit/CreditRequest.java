@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.credit;
 
+import com.codeLearner.Ziganya.models.enums.Decision;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class CreditRequest {
     private Double interestRate;
     @NotNull(message = "Member must be provided")
     private Long memberId;
+    private Decision creditDecision;
 
     public CreditRequest() {
     }
@@ -51,5 +53,13 @@ public class CreditRequest {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Decision getCreditDecision() {
+        return creditDecision;
+    }
+
+    public void setCreditDecision(Decision creditDecision) {
+        this.creditDecision = creditDecision;
     }
 }
