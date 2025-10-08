@@ -1,6 +1,7 @@
 package com.codeLearner.Ziganya.models.member;
 
 import com.codeLearner.Ziganya.models.contribution.Contribution;
+import com.codeLearner.Ziganya.models.credit.Credit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -20,6 +21,10 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Contribution> contributions;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Credit> credits;
 
     public Member() {
     }
@@ -73,11 +78,7 @@ public class Member {
         this.manyOfActions = manyOfActions;
     }
 
-    public List<Contribution> getContributions() {
-        return contributions;
-    }
 
-    public void setContributions(List<Contribution> contributions) {
-        this.contributions = contributions;
-    }
+
+
 }
