@@ -11,4 +11,5 @@ public interface AssociationAccountService {
 
     public AssociationAccountResponse getAssociationAccountByPeriod(LocalDate cycleStartDate, LocalDate cycleEndDate);
 
+    public AssociationAccountResponse getCurrentAssociationAccount();
 }

@@ -34,4 +34,9 @@ public class AssociationAccountServiceImpl implements AssociationAccountService{
     public AssociationAccountResponse getAssociationAccountByPeriod(LocalDate cycleStartDate, LocalDate cycleEndDate) {
         return this.associationAccountRepository.getAssociationAccountByPeriod(cycleStartDate, cycleEndDate).map(associationAccountConverter::convertToResponse).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_ASSOCIATION_ACCOUNT_FOUND_KEY, I18nConstants.NO_ASSOCIATION_ACCOUNT_FOUND,I18nConstants.NO_ASSOCIATION_ACCOUNT_FOUND));
     }
+
+    @Override
+    public AssociationAccountResponse getCurrentAssociationAccount() {
+        return associationAccountConverter.convertToResponse(associationAccountRepository.findCurrentAssociationAccount());
+    }
 }

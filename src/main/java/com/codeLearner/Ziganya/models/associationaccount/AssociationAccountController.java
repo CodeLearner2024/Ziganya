@@ -33,4 +33,12 @@ public class AssociationAccountController {
         List<AssociationAccountResponse> associationAccountResponse = this.associationAccountService.getAllAssociationAccounts();
         return new ResponseEntity<>(associationAccountResponse, HttpStatus.OK);
     }
+
+
+    @GetMapping
+    public ResponseEntity<AssociationAccountResponse> getCurrentAssociationAccount() {
+        AssociationAccountResponse associationAccountResponse = this.associationAccountService.getCurrentAssociationAccount();
+        return new ResponseEntity<>(associationAccountResponse, HttpStatus.OK);
+    }
+
 }

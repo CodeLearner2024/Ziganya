@@ -27,6 +27,7 @@ public class AssociationDetailsServiceImpl implements AssociationDetailsService{
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_ASSOCIATION_BLANK_NAME_KEY,I18nConstants.NO_ASSOCIATION_BLANK_NAME,I18nConstants.NO_ASSOCIATION_BLANK_NAME);
         }
         AssociationAccount associationAccount = new AssociationAccount();
+        associationAccount.setId(1L);
         associationAccount.setCurrentAmount(0.0);
         associationAccount.setLoanBalance(0.0);
         associationAccount.setCycleStartDate(associationDetailsRequest.getCycleStartDate());

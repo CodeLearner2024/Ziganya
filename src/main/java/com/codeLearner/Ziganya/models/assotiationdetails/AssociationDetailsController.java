@@ -1,11 +1,9 @@
 package com.codeLearner.Ziganya.models.assotiationdetails;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/association-details")
@@ -19,7 +17,7 @@ public class AssociationDetailsController {
     }
 
     @PostMapping
-    public ResponseEntity<AssociationDetailsResponse> addAssociationDetails(AssociationDetailsRequest associationDetailsRequest){
+    public ResponseEntity<AssociationDetailsResponse> addAssociationDetails(@Valid @RequestBody AssociationDetailsRequest associationDetailsRequest){
         AssociationDetailsResponse response = associationDetailsService.addAssociationDetails(associationDetailsRequest);
         return  new ResponseEntity<>(response, HttpStatus.CREATED);
     }
