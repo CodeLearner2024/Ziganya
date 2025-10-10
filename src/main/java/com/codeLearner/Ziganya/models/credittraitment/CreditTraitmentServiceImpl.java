@@ -3,18 +3,19 @@ package com.codeLearner.Ziganya.models.credittraitment;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
 import com.codeLearner.Ziganya.models.credit.Credit;
 import com.codeLearner.Ziganya.models.credit.CreditRepository;
+import com.codeLearner.Ziganya.models.enums.Decision;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
 @Service
-public class CreditTraitmentServiceImpl implements CreditTraitmentService{
+public class CreditTraitmentServiceImpl implements CreditTraitmentService {
 
-    private final CreditTraitmentRepository creditTraitmentRepository;;
+    private final CreditTraitmentRepository creditTraitmentRepository;
     private final CreditTraitmentConverter creditTraitmentConverter;
     private final CreditRepository creditRepository;
     private final AssociationAccountRepository associationAccountRepository;
@@ -31,7 +32,18 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService{
     @Override
     public CreditTraitmentResponse createCreditTraitment(CreditTraitmentRequest request) {
         CreditTraitment creditTraitment = creditTraitmentConverter.convertToEntity(request);
-        Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_FOUND_KEY, I18nConstants.CREDIT_NOT_FOUND,I18nConstants.CREDIT_NOT_FOUND));
+        Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_FOUND_KEY, I18nConstants.CREDIT_NOT_FOUND, I18nConstants.CREDIT_NOT_FOUND));
+        creditTraitment.setCredit(credit);
+        AssociationAccount associationAccount = associationAccountRepository.findCurrentAssociationAccount();
+        if (request.getDecision() == Decision.GRANTED) {
+            associationAccount.setCurrentAmount(associationAccount.getLoanBalance() + credit.getAmount());
+            associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() - credit.getAmount());
+            credit.setCreditDecision(Decision.GRANTED);
+        }
+        if (request.getDecision() == Decision.REFUSED) {
+            credit.setCreditDecision(Decision.REFUSED);
+        }
+        associationAccountRepository.save(associationAccount);
         CreditTraitment savedCreditTraitment = creditTraitmentRepository.save(creditTraitment);
         return creditTraitmentConverter.convertToResponse(savedCreditTraitment);
     }

@@ -15,6 +15,7 @@ public class AssociationSettingsConverter {
         response.setManyOfMemberShipFee(associationSettings.getManyOfMemberShipFee());
         response.setLatePaymentPenalityInPercentage(associationSettings.getLatePaymentPenalityInPercentage());
         response.setInterestFrequency(associationSettings.getInterestFrequency());
+        response.setTimesOfContributionForCredit(associationSettings.getTimesOfContributionForCredit());
         response.setCreditRate(associationSettings.getCreditRate());
         return response;
     }

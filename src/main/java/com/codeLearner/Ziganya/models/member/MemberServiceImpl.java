@@ -45,6 +45,12 @@ public class MemberServiceImpl implements MemberService {
         if(request.getManyOfActions() > associationSettings.getMaxOfActions()){
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS_KEY,I18nConstants.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS,I18nConstants.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS);
         }
+        String phoneNumber = request.getPhoneNumber().trim();
+        if (!phoneNumber.matches("^\\+257\\d{8}$")) {
+            throw new UnsupportedOperationException(
+                    I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_INVALID_KEY,
+                    I18nConstants.MEMBER_PHONE_NUMBER_INVALID,I18nConstants.MEMBER_PHONE_NUMBER_INVALID);
+        }
         Member savedMember = memberRepository.save(member);
         return memberConverter.convertToResponse(savedMember);
     }
@@ -78,6 +84,12 @@ public class MemberServiceImpl implements MemberService {
             Optional<Member> optionalMember = memberRepository.findByPhoneNumber(request.getPhoneNumber());
             if(optionalMember.isPresent() && !optionalMember.get().getId().equals(id)){
                 throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_ALREADY_EXISTS_KEY, I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS, I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS);
+            }
+            String phoneNumber = request.getPhoneNumber().trim();
+            if (!phoneNumber.matches("^\\+257\\d{8}$")) {
+                throw new UnsupportedOperationException(
+                        I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_INVALID_KEY,
+                        I18nConstants.MEMBER_PHONE_NUMBER_INVALID,I18nConstants.MEMBER_PHONE_NUMBER_INVALID);
             }
             Member savedMember = memberRepository.save(member);
             return memberConverter.convertToResponse(savedMember);

@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.codeLearner.Ziganya.exceptionhandling.message;
 
 import java.util.HashMap;
