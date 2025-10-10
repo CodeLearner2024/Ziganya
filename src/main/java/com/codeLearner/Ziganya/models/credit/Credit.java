@@ -2,10 +2,13 @@ package com.codeLearner.Ziganya.models.credit;
 
 import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.member.Member;
+import com.codeLearner.Ziganya.models.refund.Refund;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "credits")
@@ -21,6 +24,10 @@ public class Credit {
     @ManyToOne
     @JsonManagedReference
     private Member member;
+
+    @OneToMany(mappedBy = "credit")
+    @JsonBackReference
+    private List<Refund> refunds;
 
 
     public Credit() {
