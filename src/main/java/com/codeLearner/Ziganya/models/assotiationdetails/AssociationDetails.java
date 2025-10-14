@@ -13,21 +13,17 @@ public class AssociationDetails {
     private String name;
     private String email;
     private String contact;
-    private LocalDate cycleStartDate;
-    private LocalDate cycleEndDate;
     private String address;
 
 
     public AssociationDetails() {
     }
 
-    public AssociationDetails(Long id, String name, String email, String contact, LocalDate cycleStartDate, LocalDate cycleEndDate, String address) {
+    public AssociationDetails(Long id, String name, String email, String contact,String address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.contact = contact;
-        this.cycleStartDate = cycleStartDate;
-        this.cycleEndDate = cycleEndDate;
         this.address = address;
     }
 
@@ -61,22 +57,6 @@ public class AssociationDetails {
 
     public void setContact(String contact) {
         this.contact = contact;
-    }
-
-    public LocalDate getCycleStartDate() {
-        return cycleStartDate;
-    }
-
-    public void setCycleStartDate(LocalDate cycleStartDate) {
-        this.cycleStartDate = cycleStartDate;
-    }
-
-    public LocalDate getCycleEndDate() {
-        return cycleEndDate;
-    }
-
-    public void setCycleEndDate(LocalDate cycleEndDate) {
-        this.cycleEndDate = cycleEndDate;
     }
 
     public String getAddress() {

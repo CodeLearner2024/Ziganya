@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.credittraitment;
+package com.codeLearner.Ziganya.models.credittreatment;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

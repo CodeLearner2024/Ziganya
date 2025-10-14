@@ -1,26 +1,34 @@
-package com.codeLearner.Ziganya.models.credittraitment;
+package com.codeLearner.Ziganya.models.credittreatment;
 
-import com.codeLearner.Ziganya.models.credit.CreditResponse;
+import com.codeLearner.Ziganya.models.credit.Credit;
 import com.codeLearner.Ziganya.models.enums.Decision;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-public class CreditTraitmentResponse {
+@Entity
+@Table(name = "credit_traitments")
+public class CreditTraitment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate traitmentDate;
     private Decision decision;
-    private CreditResponse credit;
 
+    @OneToOne
+    @JoinColumn(name = "credit_id")
+    private Credit credit;
 
-    public CreditTraitmentResponse() {
+    public CreditTraitment() {
     }
 
-    public CreditTraitmentResponse(Long id, LocalDate traitmentDate, Decision decision, CreditResponse credit) {
+    public CreditTraitment(Long id, LocalDate traitmentDate, Decision decision, Credit credit) {
         this.id = id;
         this.traitmentDate = traitmentDate;
         this.decision = decision;
         this.credit = credit;
     }
+
 
     public Long getId() {
         return id;
@@ -46,11 +54,11 @@ public class CreditTraitmentResponse {
         this.decision = decision;
     }
 
-    public CreditResponse getCredit() {
+    public Credit getCredit() {
         return credit;
     }
 
-    public void setCredit(CreditResponse credit) {
+    public void setCredit(Credit credit) {
         this.credit = credit;
     }
 }

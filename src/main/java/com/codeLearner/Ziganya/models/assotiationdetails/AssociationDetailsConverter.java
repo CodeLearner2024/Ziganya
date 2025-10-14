@@ -12,8 +12,6 @@ public class AssociationDetailsConverter {
         response.setContact(associationDetails.getContact());
         response.setAddress(associationDetails.getAddress());
         response.setEmail(associationDetails.getEmail());
-        response.setCycleStartDate(associationDetails.getCycleStartDate());
-        response.setCycleEndDate(associationDetails.getCycleEndDate());
         return response;
     }
 
@@ -24,8 +22,6 @@ public class AssociationDetailsConverter {
         associationDetails.setContact(request.getContact());
         associationDetails.setAddress(request.getAddress());
         associationDetails.setEmail(request.getEmail());
-        associationDetails.setCycleStartDate(request.getCycleStartDate());
-        associationDetails.setCycleEndDate(request.getCycleEndDate());
         return associationDetails;
     }
 }

@@ -22,4 +22,6 @@ public class I18nConstantsInjectedMessages {
     public static final String CREDIT_NOT_FOUND_KEY = "message.element.credit.not.found";
     public static final String CREDIT_MEMBER_MUST_BE_PROVIDED_KEY = "message.element.credit.member.must.be.provided";
     public static final String MEMBER_PHONE_NUMBER_INVALID_KEY = "message.element.member.phonenumber.invalid";
+    public static final String CREDIT_IN_TREATMENT_KEY="message.element.creditintreatment";
+    public static final String INSUFFICIENT_BALANCE_KEY = "message.element.insufficientbalance";
 }

@@ -1,5 +1,8 @@
 package com.codeLearner.Ziganya.models.associationaccount;
 
+import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
+import com.codeLearner.Ziganya.i18n.I18nConstants;
+import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,9 @@ public class AssociationAccountController {
     @GetMapping
     public ResponseEntity<AssociationAccountResponse> getCurrentAssociationAccount() {
         AssociationAccountResponse associationAccountResponse = this.associationAccountService.getCurrentAssociationAccount();
+        if(associationAccountResponse == null){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_ASSOCIATION_ACCOUNT_FOUND_KEY, I18nConstants.NO_ASSOCIATION_ACCOUNT_FOUND,I18nConstants.NO_ASSOCIATION_ACCOUNT_FOUND);
+        }
         return new ResponseEntity<>(associationAccountResponse, HttpStatus.OK);
     }
 

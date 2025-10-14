@@ -26,13 +26,13 @@ public class AssociationDetailsServiceImpl implements AssociationDetailsService{
         if(associationDetailsRequest.getName().isBlank()){
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_ASSOCIATION_BLANK_NAME_KEY,I18nConstants.NO_ASSOCIATION_BLANK_NAME,I18nConstants.NO_ASSOCIATION_BLANK_NAME);
         }
-        AssociationAccount associationAccount = new AssociationAccount();
-        associationAccount.setId(1L);
-        associationAccount.setCurrentAmount(0.0);
-        associationAccount.setLoanBalance(0.0);
-        associationAccount.setCycleStartDate(associationDetailsRequest.getCycleStartDate());
-        associationAccount.setCycleEndDate(associationDetailsRequest.getCycleEndDate());
-        associationAccountRepository.save(associationAccount);
+        String phoneNumber = associationDetailsRequest.getContact().trim();
+        if (!phoneNumber.matches("^\\+257\\d{8}$")) {
+            throw new UnsupportedOperationException(
+                    I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_INVALID_KEY,
+                    I18nConstants.MEMBER_PHONE_NUMBER_INVALID,I18nConstants.MEMBER_PHONE_NUMBER_INVALID);
+        }
+
         AssociationDetails savedAssociationDetails = associationDetailsRepository.save(associationDetails);
         return associationDetailsConverter.converterToResponse(savedAssociationDetails);
     }

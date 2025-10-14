@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.credittraitment;
+package com.codeLearner.Ziganya.models.credittreatment;
 
 import java.util.List;
 

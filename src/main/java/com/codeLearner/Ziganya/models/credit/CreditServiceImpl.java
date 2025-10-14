@@ -3,8 +3,7 @@ package com.codeLearner.Ziganya.models.credit;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
-import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
-import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
+import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.enums.InterestFrequency;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.codeLearner.Ziganya.models.member.MemberRepository;
@@ -23,23 +22,28 @@ public class CreditServiceImpl implements CreditService {
     private final CreditRepository creditRepository;
     private final CreditConverter creditConverter;
     private final MemberRepository memberRepository;
-    private final AssociationAccountRepository associationAccountRepository;
     private final AssociationSettingsRepository associationSettingsRepository;
 
-    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationAccountRepository associationAccountRepository, AssociationSettingsRepository associationSettingsRepository) {
+    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository) {
         this.creditRepository = creditRepository;
         this.creditConverter = creditConverter;
         this.memberRepository = memberRepository;
-        this.associationAccountRepository = associationAccountRepository;
         this.associationSettingsRepository = associationSettingsRepository;
     }
 
     @Override
     public CreditResponse createCredit(CreditRequest request) {
-        AssociationSettings associationSettings = associationSettingsRepository.findById(1L).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.ASSOCIATION_SETTINGS_NOT_FOUND_KEY, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND));
+        AssociationSettings associationSettings = associationSettingsRepository.fetchCurrentAssociationSettings();
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
         if (member == null) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_MEMBER_MUST_BE_PROVIDED_KEY, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED);
+        }
+        List<Credit> credits = creditRepository.findByMemberId(request.getMemberId());
+
+        List<Credit> creditInTraitments = credits.stream().filter(treatment -> treatment.getCreditDecision().equals(Decision.IN_TREATMENT)).toList();
+
+        if (!creditInTraitments.isEmpty()) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_IN_TREATMENT_KEY, I18nConstants.CREDIT_IN_TREATMENT, I18nConstants.CREDIT_IN_TREATMENT);
         }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);
@@ -52,7 +56,7 @@ public class CreditServiceImpl implements CreditService {
     public List<CreditResponse> getAllCredits() {
         return creditRepository.findAll().stream().map(credit -> {
                     CreditResponse response = creditConverter.convertToResponse(credit);
-                    AssociationSettings associationSettings = associationSettingsRepository.findById(1L).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.ASSOCIATION_SETTINGS_NOT_FOUND_KEY, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND));
+                    AssociationSettings associationSettings = associationSettingsRepository.fetchCurrentAssociationSettings();
                     if (associationSettings.getInterestFrequency() == InterestFrequency.DAILY) {
                         LocalDate currentDate = LocalDate.now();
                         LocalDate requestDate = credit.getCreditDate();
@@ -66,7 +70,6 @@ public class CreditServiceImpl implements CreditService {
                     }
                     return response;
                 }
-
         ).toList();
     }
 

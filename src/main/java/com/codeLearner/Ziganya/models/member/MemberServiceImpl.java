@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberResponse createMember(MemberRequest request) {
         Member member = memberConverter.convertToEntity(request);
-        AssociationSettings associationSettings = associationSettingsRepository.findById(1L).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.ASSOCIATION_SETTINGS_NOT_FOUND_KEY, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND, I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND));
+        AssociationSettings associationSettings = associationSettingsRepository.fetchCurrentAssociationSettings();
         if(memberRepository.existsByPhoneNumber(request.getPhoneNumber())){
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_ALREADY_EXISTS_KEY,I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS,I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS);
         }

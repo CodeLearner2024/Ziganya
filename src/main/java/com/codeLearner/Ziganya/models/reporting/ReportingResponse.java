@@ -5,6 +5,7 @@ public class ReportingResponse {
     private Integer totalActions;
     private Double  totalCurrentBalance;
     private Double totalLoanBalance;
+    private String assocoiationName;
 
     public ReportingResponse() {
     }
@@ -46,5 +47,13 @@ public class ReportingResponse {
 
     public void setTotalLoanBalance(Double totalLoanBalance) {
         this.totalLoanBalance = totalLoanBalance;
+    }
+
+    public String getAssocoiationName() {
+        return assocoiationName;
+    }
+
+    public void setAssocoiationName(String assocoiationName) {
+        this.assocoiationName = assocoiationName;
     }
 }

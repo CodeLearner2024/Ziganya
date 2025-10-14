@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.credittraitment;
+package com.codeLearner.Ziganya.models.credittreatment;
 
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
@@ -35,9 +35,13 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService {
         Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_FOUND_KEY, I18nConstants.CREDIT_NOT_FOUND, I18nConstants.CREDIT_NOT_FOUND));
         creditTraitment.setCredit(credit);
         AssociationAccount associationAccount = associationAccountRepository.findCurrentAssociationAccount();
+        if(associationAccount.getCurrentAmount() < credit.getAmount()){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.INSUFFICIENT_BALANCE_KEY,I18nConstants.INSUFFICIENT_BALANCE,I18nConstants.INSUFFICIENT_BALANCE);
+        }
         if (request.getDecision() == Decision.GRANTED) {
-            associationAccount.setCurrentAmount(associationAccount.getLoanBalance() + credit.getAmount());
             associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() - credit.getAmount());
+            associationAccount.setLoanBalance(associationAccount.getLoanBalance()+credit.getAmount());
+            associationAccountRepository.save(associationAccount);
             credit.setCreditDecision(Decision.GRANTED);
         }
         if (request.getDecision() == Decision.REFUSED) {

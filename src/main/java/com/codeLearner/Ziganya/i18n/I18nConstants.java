@@ -21,5 +21,8 @@ public class I18nConstants {
     public static final String CREDIT_NOT_FOUND = "message.element.credit.not.found";
     public static final String CREDIT_MEMBER_MUST_BE_PROVIDED = "message.element.credit.member.must.be.provided";
     public static final String MEMBER_PHONE_NUMBER_INVALID = "message.element.member.phonenumber.invalid";
+    public static final String CREDIT_IN_TREATMENT = "message.element.creditintreatment";
+    public static final String INSUFFICIENT_BALANCE = "message.element.insufficientbalance";
+
 
 }

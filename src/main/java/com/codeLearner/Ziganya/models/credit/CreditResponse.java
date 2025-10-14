@@ -1,6 +1,7 @@
 package com.codeLearner.Ziganya.models.credit;
 
 import com.codeLearner.Ziganya.models.enums.Decision;
+import com.codeLearner.Ziganya.models.member.MemberResponse;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public class CreditResponse {
     private Double interestRate;
     private Double totalAmountToPay;
     private Decision creditDecision;
+    private MemberResponse member;
 
 
 
@@ -70,5 +72,13 @@ public class CreditResponse {
 
     public void setCreditDecision(Decision creditDecision) {
         this.creditDecision = creditDecision;
+    }
+
+    public MemberResponse getMember() {
+        return member;
+    }
+
+    public void setMember(MemberResponse member) {
+        this.member = member;
     }
 }
