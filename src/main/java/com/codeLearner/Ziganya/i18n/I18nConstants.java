@@ -23,6 +23,9 @@ public class I18nConstants {
     public static final String MEMBER_PHONE_NUMBER_INVALID = "message.element.member.phonenumber.invalid";
     public static final String CREDIT_IN_TREATMENT = "message.element.creditintreatment";
     public static final String INSUFFICIENT_BALANCE = "message.element.insufficientbalance";
+    public static final String CREDIT_NOT_GRANTED = "message.element.creditnotgranted";
+    public static final String STAYED_AMOUNT_TO_REFUND = "message.element.amountstayed";
+
 
 
 }

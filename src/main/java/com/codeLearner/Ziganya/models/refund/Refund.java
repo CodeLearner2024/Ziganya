@@ -15,7 +15,6 @@ public class Refund {
     private LocalDate refundDate;
     private Double amount;
 
-
     @ManyToOne
     @JsonManagedReference
     private Credit credit;
