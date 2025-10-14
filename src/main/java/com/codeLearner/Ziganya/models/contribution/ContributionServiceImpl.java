@@ -42,7 +42,7 @@ public class ContributionServiceImpl implements ContributionService {
         contribution.setMember(member);
 
         associationAccount.setCurrentAmount(associationAccount.getCurrentAmount()+ request.getAmount());
-        associationAccount.setTotalAmount(associationAccount.getCurrentAmount());
+        associationAccount.setTotalAmount(associationAccount.getCurrentAmount()+associationAccount.getLoanBalance());
         associationAccountRepository.save(associationAccount);
         Contribution savedContribution = contributionRepository.save(contribution);
         return contributionConverter.convertToResponse(savedContribution);
