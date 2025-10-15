@@ -1,9 +1,15 @@
 package com.codeLearner.Ziganya.models.contribution;
 
+import com.codeLearner.Ziganya.models.member.MemberConverter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ContributionConverter {
+    private final MemberConverter memberConverter;
+
+    public ContributionConverter(MemberConverter memberConverter) {
+        this.memberConverter = memberConverter;
+    }
 
     public ContributionResponse convertToResponse(Contribution contribution){
         ContributionResponse response = new ContributionResponse();
@@ -11,6 +17,7 @@ public class ContributionConverter {
         response.setContributionDate(contribution.getContributionDate());
         response.setAmount(contribution.getAmount());
         response.setDescription(contribution.getDescription());
+        response.setMember(memberConverter.convertToResponse(contribution.getMember()));
         return response;
     }
 

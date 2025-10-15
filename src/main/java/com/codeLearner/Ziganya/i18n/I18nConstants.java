@@ -25,6 +25,7 @@ public class I18nConstants {
     public static final String INSUFFICIENT_BALANCE = "message.element.insufficientbalance";
     public static final String CREDIT_NOT_GRANTED = "message.element.creditnotgranted";
     public static final String STAYED_AMOUNT_TO_REFUND = "message.element.amountstayed";
+    public static final String MEMBER_USED_IN_OTHER_SERVICE = "message.element.memberused";
 
 
 

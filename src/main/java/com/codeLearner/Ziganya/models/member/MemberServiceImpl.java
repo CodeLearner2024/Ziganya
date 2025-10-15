@@ -99,6 +99,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public DeleteOperationResponse deleteMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
+        if(!member.isEligibleForDeleteOperation()){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_USED_IN_OTHER_SERVICE_KEY,I18nConstants.MEMBER_USED_IN_OTHER_SERVICE,I18nConstants.MEMBER_USED_IN_OTHER_SERVICE);
+        }
         this.memberRepository.deleteById(member.getId());
         return new DeleteOperationResponse(true);
     }

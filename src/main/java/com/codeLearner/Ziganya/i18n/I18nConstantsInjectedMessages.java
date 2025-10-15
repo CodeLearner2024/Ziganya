@@ -26,4 +26,5 @@ public class I18nConstantsInjectedMessages {
     public static final String INSUFFICIENT_BALANCE_KEY = "message.element.insufficientbalance";
     public static final String CREDIT_NOT_GRANTED_KEY = "message.element.creditnotgranted";
     public static final String STAYED_AMOUNT_TO_REFUND_KEY="message.element.amountstayed";
+    public static final String MEMBER_USED_IN_OTHER_SERVICE_KEY = "message.element.memberused";
 }

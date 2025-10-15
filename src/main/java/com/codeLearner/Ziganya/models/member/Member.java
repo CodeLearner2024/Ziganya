@@ -78,6 +78,10 @@ public class Member {
         this.manyOfActions = manyOfActions;
     }
 
+    public boolean isEligibleForDeleteOperation(){
+        return this.contributions.isEmpty() && this.credits.isEmpty();
+    }
+
 
 
 

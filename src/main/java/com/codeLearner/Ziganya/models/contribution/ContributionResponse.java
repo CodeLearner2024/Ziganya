@@ -1,5 +1,7 @@
 package com.codeLearner.Ziganya.models.contribution;
 
+import com.codeLearner.Ziganya.models.member.MemberResponse;
+
 import java.time.LocalDate;
 
 public class ContributionResponse {
@@ -7,6 +9,7 @@ public class ContributionResponse {
     private LocalDate contributionDate;
     private Double amount;
     private String description;
+    private MemberResponse member;
 
 
     public ContributionResponse() {
@@ -50,5 +53,13 @@ public class ContributionResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public MemberResponse getMember() {
+        return member;
+    }
+
+    public void setMember(MemberResponse member) {
+        this.member = member;
     }
 }
