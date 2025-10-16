@@ -20,6 +20,7 @@ public class Credit {
     private LocalDate creditDate;
     private Double interestRate;
     private Decision creditDecision;
+    private Double totalToPay;
 
     @ManyToOne
     @JsonManagedReference
@@ -86,5 +87,13 @@ public class Credit {
 
     public void setCreditDecision(Decision creditDecision) {
         this.creditDecision = creditDecision;
+    }
+
+    public Double getTotalToPay() {
+        return totalToPay;
+    }
+
+    public void setTotalToPay(Double totalToPay) {
+        this.totalToPay = totalToPay;
     }
 }

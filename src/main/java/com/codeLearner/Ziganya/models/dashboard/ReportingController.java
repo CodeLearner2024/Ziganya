@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.reporting;
+package com.codeLearner.Ziganya.models.dashboard;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

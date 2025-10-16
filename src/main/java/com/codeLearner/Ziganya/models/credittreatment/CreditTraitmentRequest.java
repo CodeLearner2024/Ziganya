@@ -9,6 +9,8 @@ public class CreditTraitmentRequest {
     private Decision decision;
     private Long creditId;
     private Decision creditDecision;
+    private Double totalToPay;
+
 
 
     public CreditTraitmentRequest() {
@@ -42,5 +44,21 @@ public class CreditTraitmentRequest {
 
     public void setCreditId(Long creditId) {
         this.creditId = creditId;
+    }
+
+    public Decision getCreditDecision() {
+        return creditDecision;
+    }
+
+    public void setCreditDecision(Decision creditDecision) {
+        this.creditDecision = creditDecision;
+    }
+
+    public Double getTotalToPay() {
+        return totalToPay;
+    }
+
+    public void setTotalToPay(Double totalToPay) {
+        this.totalToPay = totalToPay;
     }
 }

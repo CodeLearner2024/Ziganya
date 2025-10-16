@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.reporting;
+package com.codeLearner.Ziganya.models.dashboard;
 
 public class ReportingResponse {
     private Integer totalMembers;

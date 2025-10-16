@@ -43,6 +43,8 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService {
             associationAccount.setLoanBalance(associationAccount.getLoanBalance()+credit.getAmount());
             associationAccountRepository.save(associationAccount);
             credit.setCreditDecision(Decision.GRANTED);
+            double interestAmount = credit.getAmount() * credit.getInterestRate() / 100;
+            credit.setTotalToPay(interestAmount+credit.getAmount());
             creditRepository.save(credit);
         }
         if (request.getDecision() == Decision.REFUSED) {

@@ -10,6 +10,8 @@ public class CreditTraitmentResponse {
     private LocalDate traitmentDate;
     private Decision decision;
     private CreditResponse credit;
+    private Double totalToPay;
+
 
 
     public CreditTraitmentResponse() {
@@ -52,5 +54,13 @@ public class CreditTraitmentResponse {
 
     public void setCredit(CreditResponse credit) {
         this.credit = credit;
+    }
+
+    public Double getTotalToPay() {
+        return totalToPay;
+    }
+
+    public void setTotalToPay(Double totalToPay) {
+        this.totalToPay = totalToPay;
     }
 }

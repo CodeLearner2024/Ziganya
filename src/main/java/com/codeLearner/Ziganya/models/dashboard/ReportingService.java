@@ -1,4 +1,4 @@
-package com.codeLearner.Ziganya.models.reporting;
+package com.codeLearner.Ziganya.models.dashboard;
 
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
