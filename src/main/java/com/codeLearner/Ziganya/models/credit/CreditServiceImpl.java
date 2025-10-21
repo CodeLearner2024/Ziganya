@@ -64,7 +64,7 @@ public class CreditServiceImpl implements CreditService {
                         double interest = credit.getAmount() * associationSettings.getCreditRate() * days / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);
 
-                    } else {
+                    } else if (associationSettings.getInterestFrequency() == InterestFrequency.MONTHLY){
                         double interest = credit.getAmount() * associationSettings.getCreditRate() / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);
                     }

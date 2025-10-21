@@ -37,6 +37,9 @@ public class ReportService {
             ReportResponse report = new ReportResponse();
             report.setMemberResponse(converter.convertToResponse(member));
             report.setActions(member.getManyOfActions());
+//            report.setLoanAmount();
+//            report.setRefundAmount();
+//            report.setInterestAmount();
             reports.add(report);
 
         }

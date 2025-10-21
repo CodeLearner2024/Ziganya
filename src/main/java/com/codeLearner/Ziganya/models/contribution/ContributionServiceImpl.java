@@ -12,6 +12,9 @@ import com.codeLearner.Ziganya.models.settings.AssociationSettingsRepository;
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -39,10 +42,22 @@ public class ContributionServiceImpl implements ContributionService {
         if (request.getAmount() < (member.getManyOfActions() * associationSettings.getContributionAmount()) || request.getAmount() > (member.getManyOfActions() * associationSettings.getContributionAmount())) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_AMOUNT_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID);
         }
-        contribution.setMember(member);
+        if(request.getMonth().getValue() < LocalDate.now().getMonth().getValue()){
+            contribution.setLatePenaltyAmount((request.getAmount()*associationSettings.getLatePaymentPenalityInPercentage())/100);
+        }else {
+            contribution.setLatePenaltyAmount(0.0);
+        }
 
-        associationAccount.setCurrentAmount(associationAccount.getCurrentAmount()+ request.getAmount());
-        associationAccount.setTotalAmount(associationAccount.getCurrentAmount()+associationAccount.getLoanBalance());
+        Contribution byEmployeeAndMonth = contributionRepository.getContributionByEmployeeIdAndMonth(request.getMemberId(), request.getMonth());
+        if (byEmployeeAndMonth != null) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_ALREADY_EXISTS_KEY, I18nConstants.CONTRIBUTION_ALREADY_EXISTS, I18nConstants.CONTRIBUTION_ALREADY_EXISTS);
+        }
+        if (request.getContributionDate().isBefore(associationSettings.getCycleStartDate())) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_DATE_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_DATE_NOT_VALID, I18nConstants.CONTRIBUTION_DATE_NOT_VALID);
+        }
+        contribution.setMember(member);
+        associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() + request.getAmount());
+        associationAccount.setTotalAmount(associationAccount.getCurrentAmount() + associationAccount.getLoanBalance());
         associationAccountRepository.save(associationAccount);
         Contribution savedContribution = contributionRepository.save(contribution);
         return contributionConverter.convertToResponse(savedContribution);
