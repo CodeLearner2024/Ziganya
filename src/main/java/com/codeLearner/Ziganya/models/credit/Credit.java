@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.credit;
 
+import com.codeLearner.Ziganya.models.credittreatment.CreditTraitment;
 import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.codeLearner.Ziganya.models.refund.Refund;
@@ -29,6 +30,12 @@ public class Credit {
     @OneToMany(mappedBy = "credit")
     @JsonBackReference
     private List<Refund> refunds;
+
+    @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<CreditTraitment> traitements;
+
+
 
 
     public Credit() {

@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.credit;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.contribution.ContributionRepository;
 import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.enums.InterestFrequency;
 import com.codeLearner.Ziganya.models.member.Member;
@@ -23,12 +24,14 @@ public class CreditServiceImpl implements CreditService {
     private final CreditConverter creditConverter;
     private final MemberRepository memberRepository;
     private final AssociationSettingsRepository associationSettingsRepository;
+    private final ContributionRepository contributionRepository;
 
-    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository) {
+    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository, ContributionRepository contributionRepository) {
         this.creditRepository = creditRepository;
         this.creditConverter = creditConverter;
         this.memberRepository = memberRepository;
         this.associationSettingsRepository = associationSettingsRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     @Override
@@ -38,12 +41,18 @@ public class CreditServiceImpl implements CreditService {
         if (member == null) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_MEMBER_MUST_BE_PROVIDED_KEY, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED);
         }
+        if(request.getAmount() > contributionRepository.sumCurrentYearContributions() ){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.INSUFFICIENT_BALANCE_KEY,I18nConstants.INSUFFICIENT_BALANCE,I18nConstants.INSUFFICIENT_BALANCE);
+        }
         List<Credit> credits = creditRepository.findByMemberId(request.getMemberId());
 
         List<Credit> creditInTraitments = credits.stream().filter(treatment -> treatment.getCreditDecision().equals(Decision.IN_TREATMENT)).toList();
 
         if (!creditInTraitments.isEmpty()) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_IN_TREATMENT_KEY, I18nConstants.CREDIT_IN_TREATMENT, I18nConstants.CREDIT_IN_TREATMENT);
+        }
+        if(!contributionRepository.existsByMemberId(request.getMemberId())){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_CREDIT_WITHOUT_CONTRIBUTION_KEy,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION);
         }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);
