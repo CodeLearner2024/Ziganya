@@ -41,6 +41,9 @@ public class CreditServiceImpl implements CreditService {
         if (member == null) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_MEMBER_MUST_BE_PROVIDED_KEY, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED, I18nConstants.CREDIT_MEMBER_MUST_BE_PROVIDED);
         }
+        if(request.getAmount() > contributionRepository.sumCurrentYearContributions() ){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.INSUFFICIENT_BALANCE_KEY,I18nConstants.INSUFFICIENT_BALANCE,I18nConstants.INSUFFICIENT_BALANCE);
+        }
         List<Credit> credits = creditRepository.findByMemberId(request.getMemberId());
 
         List<Credit> creditInTraitments = credits.stream().filter(treatment -> treatment.getCreditDecision().equals(Decision.IN_TREATMENT)).toList();
@@ -49,7 +52,11 @@ public class CreditServiceImpl implements CreditService {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_IN_TREATMENT_KEY, I18nConstants.CREDIT_IN_TREATMENT, I18nConstants.CREDIT_IN_TREATMENT);
         }
         if(!contributionRepository.existsByMemberId(request.getMemberId())){
+<<<<<<< HEAD
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NOT_YET_CONTRIBUTED_KEY,I18nConstants.NOT_YET_CONTRIBUTED,I18nConstants.NOT_YET_CONTRIBUTED);
+=======
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_CREDIT_WITHOUT_CONTRIBUTION_KEy,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION);
+>>>>>>> 29834310d5e196bbe781c9fbca10a76616059f90
         }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);
@@ -70,7 +77,7 @@ public class CreditServiceImpl implements CreditService {
                         double interest = credit.getAmount() * associationSettings.getCreditRate() * days / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);
 
-                    } else {
+                    } else if (associationSettings.getInterestFrequency() == InterestFrequency.MONTHLY){
                         double interest = credit.getAmount() * associationSettings.getCreditRate() / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);
                     }

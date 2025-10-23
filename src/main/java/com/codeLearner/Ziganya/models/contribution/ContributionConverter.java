@@ -18,6 +18,8 @@ public class ContributionConverter {
         response.setAmount(contribution.getAmount());
         response.setDescription(contribution.getDescription());
         response.setMember(memberConverter.convertToResponse(contribution.getMember()));
+        response.setLatePenaltyAmount(contribution.getLatePenaltyAmount());
+        response.setMonth(contribution.getMonth());
         return response;
     }
 
@@ -26,6 +28,8 @@ public class ContributionConverter {
         contribution.setContributionDate(request.getContributionDate());
         contribution.setAmount(request.getAmount());
         contribution.setDescription(request.getDescription());
+        contribution.setMonth(request.getMonth());
+//        contribution.setLatePenaltyAmount(request.getLatePenaltyAmount());
         return contribution;
     }
 }

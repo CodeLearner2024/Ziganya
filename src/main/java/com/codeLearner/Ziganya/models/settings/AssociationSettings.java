@@ -2,7 +2,6 @@ package com.codeLearner.Ziganya.models.settings;
 
 import com.codeLearner.Ziganya.models.enums.InterestFrequency;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 

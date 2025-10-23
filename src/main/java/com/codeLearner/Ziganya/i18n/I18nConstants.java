@@ -27,6 +27,11 @@ public class I18nConstants {
     public static final String STAYED_AMOUNT_TO_REFUND = "message.element.amountstayed";
     public static final String MEMBER_USED_IN_OTHER_SERVICE = "message.element.memberused";
     public static final String NOT_YET_CONTRIBUTED = "message.element.notyetcontributed";
+    public static final String CONTRIBUTION_ALREADY_EXISTS = "message.element.contributionalreadyexists";
+    public static final String CONTRIBUTION_DATE_NOT_VALID = "message.element.contributiondatenotvalid";
+    public static final String NO_CREDIT_WITHOUT_CONTRIBUTION="message.element.nocreditwithoutcontribution";
+
+
 
 
 

@@ -2,6 +2,7 @@ package com.codeLearner.Ziganya.models.credittreatment;
 
 import com.codeLearner.Ziganya.models.credit.Credit;
 import com.codeLearner.Ziganya.models.enums.Decision;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class CreditTraitment {
     private Decision decision;
 
     @OneToOne
-    @JoinColumn(name = "credit_id")
+    @JsonManagedReference
     private Credit credit;
 
     public CreditTraitment() {

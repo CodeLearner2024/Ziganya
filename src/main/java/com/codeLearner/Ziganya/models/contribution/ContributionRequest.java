@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.contribution;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 public class ContributionRequest {
     private LocalDate contributionDate;
@@ -11,6 +12,9 @@ public class ContributionRequest {
     private String description;
     @NotNull(message = "Member must be provided")
     private Long memberId;
+    @NotNull(message = "Month must be provided")
+    private Month month;
+    private Double latePenaltyAmount;
 
     public ContributionRequest() {
     }
@@ -51,5 +55,21 @@ public class ContributionRequest {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
+
+    public Double getLatePenaltyAmount() {
+        return latePenaltyAmount;
+    }
+
+    public void setLatePenaltyAmount(Double latePenaltyAmount) {
+        this.latePenaltyAmount = latePenaltyAmount;
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 @Entity
 @Table(name = "contributions")
@@ -15,6 +16,9 @@ public class Contribution {
     private LocalDate contributionDate;
     private Double amount;
     private String description;
+    @Enumerated(EnumType.STRING)
+    private Month month;
+    private Double latePenaltyAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -69,5 +73,21 @@ public class Contribution {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
+
+    public Double getLatePenaltyAmount() {
+        return latePenaltyAmount;
+    }
+
+    public void setLatePenaltyAmount(Double latePenaltyAmount) {
+        this.latePenaltyAmount = latePenaltyAmount;
     }
 }

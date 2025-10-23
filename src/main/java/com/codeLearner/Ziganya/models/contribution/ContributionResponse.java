@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.contribution;
 import com.codeLearner.Ziganya.models.member.MemberResponse;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 public class ContributionResponse {
     private Long id;
@@ -10,6 +11,8 @@ public class ContributionResponse {
     private Double amount;
     private String description;
     private MemberResponse member;
+    private Month month;
+    private Double latePenaltyAmount;
 
 
     public ContributionResponse() {
@@ -61,5 +64,21 @@ public class ContributionResponse {
 
     public void setMember(MemberResponse member) {
         this.member = member;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
+
+    public Double getLatePenaltyAmount() {
+        return latePenaltyAmount;
+    }
+
+    public void setLatePenaltyAmount(Double latePenaltyAmount) {
+        this.latePenaltyAmount = latePenaltyAmount;
     }
 }
