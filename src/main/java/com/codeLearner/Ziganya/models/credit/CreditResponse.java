@@ -13,6 +13,8 @@ public class CreditResponse {
     private Double totalAmountToPay;
     private Decision creditDecision;
     private MemberResponse member;
+    private Double AmountPaid;
+
 
 
 
@@ -80,5 +82,13 @@ public class CreditResponse {
 
     public void setMember(MemberResponse member) {
         this.member = member;
+    }
+
+    public Double getAmountPaid() {
+        return AmountPaid;
+    }
+
+    public void setAmountPaid(Double amountPaid) {
+        AmountPaid = amountPaid;
     }
 }

@@ -1,10 +1,14 @@
 package com.codeLearner.Ziganya.models.refund;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class RefundRequest {
     private LocalDate refundDate;
+    @NotNull(message = "Amount must be provided")
     private Double amount;
+    @NotNull(message = "Credit must be provided")
     private Long creditId;
 
 

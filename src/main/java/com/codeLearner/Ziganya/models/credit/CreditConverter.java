@@ -20,7 +20,8 @@ public class CreditConverter {
         response.setInterestRate(credit.getInterestRate());
         response.setMember(memberConverter.convertToResponse(credit.getMember()));
         response.setCreditDecision(credit.getCreditDecision());
-
+        response.setTotalAmountToPay(credit.getTotalToPay());
+        response.setAmountPaid(credit.getAmountPaid());
         return  response;
     }
 

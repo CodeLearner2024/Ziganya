@@ -15,14 +15,15 @@ public class RefundConverter {
     public RefundResponse convertToResponse(Refund refund){
         RefundResponse response = new RefundResponse();
         response.setAmount(refund.getAmount());
-        response.setId(response.getId());
+        response.setId(refund.getId());
         response.setCredit(creditConverter.convertToResponse(refund.getCredit()));
+        response.setRefundDate(refund.getRefundDate());
         return response;
     }
 
     public Refund convertToEntity(RefundRequest request){
         Refund refund = new Refund();
-        refund.setAmount(refund.getAmount());
+        refund.setAmount(request.getAmount());
         refund.setRefundDate(request.getRefundDate());
         return refund;
     }

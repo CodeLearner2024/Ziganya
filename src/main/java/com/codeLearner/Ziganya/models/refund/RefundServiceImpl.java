@@ -11,10 +11,11 @@ import com.codeLearner.Ziganya.models.enums.Decision;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class RefundServiceImpl implements RefundService{
+public class RefundServiceImpl implements RefundService {
 
     private final RefundRepository refundRepository;
     private final RefundConverter refundConverter;
@@ -32,22 +33,33 @@ public class RefundServiceImpl implements RefundService{
     @Override
     public RefundResponse createRefund(RefundRequest request) {
         AssociationAccount associationAccount = associationAccountRepository.findCurrentAssociationAccount();
-        Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new RuntimeException("Credit not found"));
-        if(!credit.getCreditDecision().equals(Decision.GRANTED)){
-            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_GRANTED_KEY, I18nConstants.CREDIT_NOT_GRANTED,I18nConstants.CREDIT_NOT_GRANTED);
+        Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_FOUND_KEY, I18nConstants.CREDIT_NOT_FOUND, I18nConstants.CREDIT_NOT_FOUND));
+        if (!credit.getCreditDecision().equals(Decision.GRANTED)) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_GRANTED_KEY, I18nConstants.CREDIT_NOT_GRANTED, I18nConstants.CREDIT_NOT_GRANTED);
         }
         List<Refund> refundList = refundRepository.findAllByCreditId(request.getCreditId());
         double totalRefunded = refundList.stream().mapToDouble(Refund::getAmount).sum();
-        double interest = credit.getAmount()*credit.getInterestRate();
-        if ((totalRefunded+request.getAmount()) > (credit.getAmount()+interest)){
-            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.STAYED_AMOUNT_TO_REFUND_KEY,I18nConstants.STAYED_AMOUNT_TO_REFUND,I18nConstants.STAYED_AMOUNT_TO_REFUND);
+        if ((totalRefunded + request.getAmount()) > credit.getTotalToPay()) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.STAYED_AMOUNT_TO_REFUND_KEY, I18nConstants.STAYED_AMOUNT_TO_REFUND, I18nConstants.STAYED_AMOUNT_TO_REFUND);
         }
-
+        if (credit.getAmountPaid() == null) {
+            credit.setAmountPaid(0.0);
+        }
+        if (credit.getAmountPaid() + request.getAmount() == credit.getTotalToPay()) {
+            credit.setCreditDecision(Decision.PAID);
+            creditRepository.save(credit);
+        }
         Refund refund = refundConverter.convertToEntity(request);
+        if (refund.getRefundDate() == null) {
+            refund.setRefundDate(LocalDate.now());
+        }
+        credit.setAmountPaid(credit.getAmountPaid() + request.getAmount());
+        creditRepository.save(credit);
         refund.setCredit(credit);
-        associationAccount.setCurrentAmount(associationAccount.getCurrentAmount()+ refund.getAmount());
-        associationAccount.setLoanBalance(associationAccount.getLoanBalance()- refund.getAmount());
-        associationAccountRepository.save(associationAccount);
+        associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() + request.getAmount());
+        associationAccount.setLoanBalance(
+                Math.max(0.0, associationAccount.getLoanBalance() - request.getAmount())
+        );        associationAccountRepository.save(associationAccount);
         Refund savedRefund = refundRepository.save(refund);
         return refundConverter.convertToResponse(savedRefund);
     }
