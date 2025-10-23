@@ -27,6 +27,9 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse createMember(MemberRequest request) {
         Member member = memberConverter.convertToEntity(request);
         AssociationSettings associationSettings = associationSettingsRepository.fetchCurrentAssociationSettings();
+        if(associationSettings == null){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.ASSOCIATION_SETTINGS_NOT_FOUND_KEY,I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND,I18nConstants.ASSOCIATION_SETTINGS_NOT_FOUND);
+        }
         if(memberRepository.existsByPhoneNumber(request.getPhoneNumber())){
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_ALREADY_EXISTS_KEY,I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS,I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS);
         }
@@ -45,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
         if(request.getManyOfActions() > associationSettings.getMaxOfActions()){
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS_KEY,I18nConstants.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS,I18nConstants.MEMBER_MANY_OF_ACTIONS_GREATER_THAN_MAX_OF_ACTIONS);
         }
+
         String phoneNumber = request.getPhoneNumber().trim();
         if (!phoneNumber.matches("^\\+257\\d{8}$")) {
             throw new UnsupportedOperationException(

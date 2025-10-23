@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.credit;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.contribution.ContributionRepository;
 import com.codeLearner.Ziganya.models.enums.Decision;
 import com.codeLearner.Ziganya.models.enums.InterestFrequency;
 import com.codeLearner.Ziganya.models.member.Member;
@@ -23,12 +24,14 @@ public class CreditServiceImpl implements CreditService {
     private final CreditConverter creditConverter;
     private final MemberRepository memberRepository;
     private final AssociationSettingsRepository associationSettingsRepository;
+    private final ContributionRepository contributionRepository;
 
-    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository) {
+    public CreditServiceImpl(CreditRepository creditRepository, CreditConverter creditConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository, ContributionRepository contributionRepository) {
         this.creditRepository = creditRepository;
         this.creditConverter = creditConverter;
         this.memberRepository = memberRepository;
         this.associationSettingsRepository = associationSettingsRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     @Override
@@ -44,6 +47,9 @@ public class CreditServiceImpl implements CreditService {
 
         if (!creditInTraitments.isEmpty()) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_IN_TREATMENT_KEY, I18nConstants.CREDIT_IN_TREATMENT, I18nConstants.CREDIT_IN_TREATMENT);
+        }
+        if(!contributionRepository.existsByMemberId(request.getMemberId())){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NOT_YET_CONTRIBUTED_KEY,I18nConstants.NOT_YET_CONTRIBUTED,I18nConstants.NOT_YET_CONTRIBUTED);
         }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);

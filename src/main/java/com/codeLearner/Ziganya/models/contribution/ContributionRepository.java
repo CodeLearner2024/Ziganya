@@ -11,4 +11,6 @@ public interface ContributionRepository extends JpaRepository<Contribution, Long
 
     @Query("SELECT c FROM Contribution c WHERE c.member.id = :memberId")
     List<Contribution> getContributionsByMemberId(Long memberId);
+
+    boolean existsByMemberId(Long memberId);
 }
