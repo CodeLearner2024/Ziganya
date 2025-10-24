@@ -52,11 +52,7 @@ public class CreditServiceImpl implements CreditService {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_IN_TREATMENT_KEY, I18nConstants.CREDIT_IN_TREATMENT, I18nConstants.CREDIT_IN_TREATMENT);
         }
         if(!contributionRepository.existsByMemberId(request.getMemberId())){
-<<<<<<< HEAD
-            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NOT_YET_CONTRIBUTED_KEY,I18nConstants.NOT_YET_CONTRIBUTED,I18nConstants.NOT_YET_CONTRIBUTED);
-=======
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.NO_CREDIT_WITHOUT_CONTRIBUTION_KEy,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION,I18nConstants.NO_CREDIT_WITHOUT_CONTRIBUTION);
->>>>>>> 29834310d5e196bbe781c9fbca10a76616059f90
         }
         Credit credit = creditConverter.convertToEntity(request);
         credit.setMember(member);
