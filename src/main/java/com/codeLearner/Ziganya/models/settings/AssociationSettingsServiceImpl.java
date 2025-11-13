@@ -33,6 +33,7 @@ public class AssociationSettingsServiceImpl implements AssociationSettingsServic
         associationAccount.setCurrentAmount(0.0);
         associationAccount.setLoanBalance(0.0);
         associationAccount.setTotalAmount(0.0);
+        associationAccount.setInterestAmount(0.0);
         associationAccount.setCycleStartDate(associationSettingsRequest.getCycleStartDate());
         associationAccount.setCycleEndDate(null);
         if (currentAssociationSettings != null) {

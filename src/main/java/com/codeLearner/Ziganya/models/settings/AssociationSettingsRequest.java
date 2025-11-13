@@ -17,6 +17,8 @@ public class AssociationSettingsRequest {
     private Integer maxOfActions;
     private Double creditRate;
     private InterestFrequency interestFrequency;
+    private Double activationAccountAmount;
+
 
 
 
@@ -103,5 +105,13 @@ public class AssociationSettingsRequest {
 
     public void setInterestFrequency(InterestFrequency interestFrequency) {
         this.interestFrequency = interestFrequency;
+    }
+
+    public Double getActivationAccountAmount() {
+        return activationAccountAmount;
+    }
+
+    public void setActivationAccountAmount(Double activationAccountAmount) {
+        this.activationAccountAmount = activationAccountAmount;
     }
 }

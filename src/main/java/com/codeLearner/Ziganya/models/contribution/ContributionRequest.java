@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.contribution;
 
+import com.codeLearner.Ziganya.models.enums.ContributionStatus;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -15,6 +16,9 @@ public class ContributionRequest {
     @NotNull(message = "Month must be provided")
     private Month month;
     private Double latePenaltyAmount;
+    @NotNull(message = "Status must be provided")
+    private ContributionStatus status;
+
 
     public ContributionRequest() {
     }
@@ -71,5 +75,13 @@ public class ContributionRequest {
 
     public void setLatePenaltyAmount(Double latePenaltyAmount) {
         this.latePenaltyAmount = latePenaltyAmount;
+    }
+
+    public ContributionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ContributionStatus status) {
+        this.status = status;
     }
 }

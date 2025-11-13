@@ -1,5 +1,6 @@
 package com.codeLearner.Ziganya.models.contribution;
 
+import com.codeLearner.Ziganya.models.enums.ContributionStatus;
 import com.codeLearner.Ziganya.models.member.MemberResponse;
 
 import java.time.LocalDate;
@@ -13,6 +14,8 @@ public class ContributionResponse {
     private MemberResponse member;
     private Month month;
     private Double latePenaltyAmount;
+    private ContributionStatus status;
+
 
 
     public ContributionResponse() {
@@ -80,5 +83,13 @@ public class ContributionResponse {
 
     public void setLatePenaltyAmount(Double latePenaltyAmount) {
         this.latePenaltyAmount = latePenaltyAmount;
+    }
+
+    public ContributionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ContributionStatus status) {
+        this.status = status;
     }
 }

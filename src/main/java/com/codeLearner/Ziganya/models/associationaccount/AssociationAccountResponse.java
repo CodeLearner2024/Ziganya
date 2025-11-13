@@ -5,6 +5,8 @@ public class AssociationAccountResponse {
     private Double currentAmount;
     private Double loanBalance;
     private Double totalAmount;
+    private Double interestAmount;
+
 
     public AssociationAccountResponse() {
     }
@@ -47,5 +49,13 @@ public class AssociationAccountResponse {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Double getInterestAmount() {
+        return interestAmount;
+    }
+
+    public void setInterestAmount(Double interestAmount) {
+        this.interestAmount = interestAmount;
     }
 }

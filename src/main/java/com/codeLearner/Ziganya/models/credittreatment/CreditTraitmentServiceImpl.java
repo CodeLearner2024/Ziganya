@@ -35,16 +35,17 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService {
         Credit credit = creditRepository.findById(request.getCreditId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.CREDIT_NOT_FOUND_KEY, I18nConstants.CREDIT_NOT_FOUND, I18nConstants.CREDIT_NOT_FOUND));
         creditTraitment.setCredit(credit);
         AssociationAccount associationAccount = associationAccountRepository.findCurrentAssociationAccount();
-        if(associationAccount.getCurrentAmount() < credit.getAmount()){
-            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.INSUFFICIENT_BALANCE_KEY,I18nConstants.INSUFFICIENT_BALANCE,I18nConstants.INSUFFICIENT_BALANCE);
+        if (associationAccount.getCurrentAmount() < credit.getAmount()) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.INSUFFICIENT_BALANCE_KEY, I18nConstants.INSUFFICIENT_BALANCE, I18nConstants.INSUFFICIENT_BALANCE);
         }
         if (request.getDecision() == Decision.GRANTED) {
             associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() - credit.getAmount());
-            associationAccount.setLoanBalance(associationAccount.getLoanBalance()+credit.getAmount());
+            associationAccount.setLoanBalance(associationAccount.getLoanBalance() + credit.getAmount());
+            associationAccount.setInterestAmount(associationAccount.getInterestAmount() + (credit.getAmount() * credit.getInterestRate() / 100));
             associationAccountRepository.save(associationAccount);
             credit.setCreditDecision(Decision.GRANTED);
             double interestAmount = credit.getAmount() * credit.getInterestRate() / 100;
-            credit.setTotalToPay(interestAmount+credit.getAmount());
+            credit.setTotalToPay(interestAmount + credit.getAmount());
             creditRepository.save(credit);
         }
         if (request.getDecision() == Decision.REFUSED) {

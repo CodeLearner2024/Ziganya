@@ -72,7 +72,6 @@ public class CreditServiceImpl implements CreditService {
                         Long days = ChronoUnit.DAYS.between(currentDate, requestDate);
                         double interest = credit.getAmount() * associationSettings.getCreditRate() * days / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);
-
                     } else if (associationSettings.getInterestFrequency() == InterestFrequency.MONTHLY){
                         double interest = credit.getAmount() * associationSettings.getCreditRate() / 100;
                         response.setTotalAmountToPay(credit.getAmount() + interest);

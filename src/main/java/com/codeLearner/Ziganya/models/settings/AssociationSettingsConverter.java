@@ -17,6 +17,7 @@ public class AssociationSettingsConverter {
         response.setInterestFrequency(associationSettings.getInterestFrequency());
         response.setTimesOfContributionForCredit(associationSettings.getTimesOfContributionForCredit());
         response.setCreditRate(associationSettings.getCreditRate());
+        response.setActivationAccountAmount(associationSettings.getActivationAccountAmount());
         return response;
     }
 
@@ -32,6 +33,7 @@ public class AssociationSettingsConverter {
         associationSettings.setMaxOfActions(request.getMaxOfActions());
         associationSettings.setCreditRate(request.getCreditRate());
         associationSettings.setInterestFrequency(request.getInterestFrequency());
+        associationSettings.setActivationAccountAmount(request.getActivationAccountAmount());
         return associationSettings;
     }
 }

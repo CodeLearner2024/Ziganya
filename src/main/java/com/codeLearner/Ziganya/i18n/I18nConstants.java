@@ -30,6 +30,9 @@ public class I18nConstants {
     public static final String CONTRIBUTION_ALREADY_EXISTS = "message.element.contributionalreadyexists";
     public static final String CONTRIBUTION_DATE_NOT_VALID = "message.element.contributiondatenotvalid";
     public static final String NO_CREDIT_WITHOUT_CONTRIBUTION="message.element.nocreditwithoutcontribution";
+    public static final String ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND = "message.element.activationaccount.contribution.not.found";
+    public static final String ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID = "message.element.activationaccount.amount.not.valid";
+
 
 
 

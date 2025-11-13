@@ -20,9 +20,10 @@ public class Credit {
     private Double amount;
     private LocalDate creditDate;
     private Double interestRate;
+    @Enumerated(EnumType.STRING)
     private Decision creditDecision;
     private Double totalToPay;
-    private Double AmountPaid;
+    private Double amountPaid;
 
     @ManyToOne
     @JsonManagedReference
@@ -35,8 +36,6 @@ public class Credit {
     @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<CreditTraitment> traitements;
-
-
 
 
     public Credit() {
@@ -106,10 +105,11 @@ public class Credit {
     }
 
     public Double getAmountPaid() {
-        return AmountPaid;
+        return amountPaid;
     }
 
     public void setAmountPaid(Double amountPaid) {
-        AmountPaid = amountPaid;
+        this.amountPaid = amountPaid;
     }
+
 }

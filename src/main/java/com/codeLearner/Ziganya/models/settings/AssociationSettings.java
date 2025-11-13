@@ -19,7 +19,9 @@ public class AssociationSettings {
     private Integer timesOfContributionForCredit;
     private Integer maxOfActions;
     private Double creditRate;
+    @Enumerated(EnumType.STRING)
     private InterestFrequency interestFrequency;
+    private Double activationAccountAmount;
 
 
     public AssociationSettings() {
@@ -114,5 +116,13 @@ public class AssociationSettings {
 
     public void setInterestFrequency(InterestFrequency interestFrequency) {
         this.interestFrequency = interestFrequency;
+    }
+
+    public Double getActivationAccountAmount() {
+        return activationAccountAmount;
+    }
+
+    public void setActivationAccountAmount(Double activationAccountAmount) {
+        this.activationAccountAmount = activationAccountAmount;
     }
 }

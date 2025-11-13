@@ -5,6 +5,7 @@ import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
+import com.codeLearner.Ziganya.models.enums.ContributionStatus;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.codeLearner.Ziganya.models.member.MemberRepository;
 import com.codeLearner.Ziganya.models.settings.AssociationSettings;
@@ -37,21 +38,33 @@ public class ContributionServiceImpl implements ContributionService {
         AssociationSettings associationSettings = associationSettingsRepository.fetchCurrentAssociationSettings();
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
         Contribution contribution = contributionConverter.convertToEntity(request);
-        if (request.getAmount() < (member.getManyOfActions() * associationSettings.getContributionAmount()) || request.getAmount() > (member.getManyOfActions() * associationSettings.getContributionAmount())) {
+        if (request.getStatus().equals(ContributionStatus.CONTRIBUTION) && (request.getAmount() < (member.getManyOfActions() * associationSettings.getContributionAmount()) || request.getAmount() > (member.getManyOfActions() * associationSettings.getContributionAmount()))) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_AMOUNT_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID, I18nConstants.CONTRIBUTION_AMOUNT_NOT_VALID);
         }
-        if(request.getMonth().getValue() < LocalDate.now().getMonth().getValue()){
-            contribution.setLatePenaltyAmount((request.getAmount()*associationSettings.getLatePaymentPenalityInPercentage())/100);
-        }else {
+        if (request.getMonth().getValue() < LocalDate.now().getMonth().getValue() && request.getStatus().equals(ContributionStatus.CONTRIBUTION)) {
+            contribution.setLatePenaltyAmount((request.getAmount() * associationSettings.getLatePaymentPenalityInPercentage()) / 100);
+            Double currentInterest = associationAccount.getInterestAmount();
+            if (currentInterest == null) {
+                currentInterest = 0.0;
+            }
+
+            Double penalty = (request.getAmount() * associationSettings.getLatePaymentPenalityInPercentage()) / 100;
+            associationAccount.setInterestAmount(currentInterest + penalty);        } else {
             contribution.setLatePenaltyAmount(0.0);
         }
 
         Contribution byEmployeeAndMonth = contributionRepository.getContributionByEmployeeIdAndMonth(request.getMemberId(), request.getMonth());
-        if (byEmployeeAndMonth != null) {
+        if (byEmployeeAndMonth != null && byEmployeeAndMonth.getStatus().equals(ContributionStatus.CONTRIBUTION)) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_ALREADY_EXISTS_KEY, I18nConstants.CONTRIBUTION_ALREADY_EXISTS, I18nConstants.CONTRIBUTION_ALREADY_EXISTS);
         }
         if (request.getContributionDate().isBefore(associationSettings.getCycleStartDate())) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_DATE_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_DATE_NOT_VALID, I18nConstants.CONTRIBUTION_DATE_NOT_VALID);
+        }
+        if(!contributionRepository.existsByMemberIdAndStatus(request.getMemberId(), ContributionStatus.ACTIVATION_ACCOUNT) && request.getStatus().equals(ContributionStatus.CONTRIBUTION)){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND_KEY, I18nConstants.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND, I18nConstants.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND);
+        }
+        if(request.getStatus().equals(ContributionStatus.ACTIVATION_ACCOUNT) && (request.getAmount()> associationSettings.getActivationAccountAmount()*member.getManyOfActions() || request.getAmount()< associationSettings.getActivationAccountAmount()* member.getManyOfActions())){
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID_KEY, I18nConstants.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID, I18nConstants.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID);
         }
         contribution.setMember(member);
         associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() + request.getAmount());

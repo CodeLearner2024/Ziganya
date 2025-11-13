@@ -10,6 +10,8 @@ public class AssociationAccountConverter {
         response.setCurrentAmount(associationAccount.getCurrentAmount());
         response.setLoanBalance(associationAccount.getLoanBalance());
         response.setTotalAmount(associationAccount.getTotalAmount());
+        response.setInterestAmount(associationAccount.getInterestAmount());
+        response.setId(associationAccount.getId());
         return response;
     }
 
@@ -18,6 +20,7 @@ public class AssociationAccountConverter {
         associationAccount.setCurrentAmount(request.getCurrentAmount());
         associationAccount.setLoanBalance(request.getLoanBalance());
         associationAccount.setTotalAmount(request.getTotalAmount());
+        associationAccount.setInterestAmount(request.getInterestAmount());
         return associationAccount;
     }
 }

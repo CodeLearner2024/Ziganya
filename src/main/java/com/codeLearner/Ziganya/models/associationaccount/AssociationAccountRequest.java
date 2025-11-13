@@ -4,6 +4,7 @@ public class AssociationAccountRequest {
     private Double currentAmount;
     private Double loanBalance;
     private Double totalAmount;
+    private Double interestAmount;
 
     public AssociationAccountRequest() {
 
@@ -37,5 +38,13 @@ public class AssociationAccountRequest {
 
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Double getInterestAmount() {
+        return interestAmount;
+    }
+
+    public void setInterestAmount(Double interestAmount) {
+        this.interestAmount = interestAmount;
     }
 }

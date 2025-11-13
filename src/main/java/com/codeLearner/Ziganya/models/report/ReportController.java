@@ -23,4 +23,10 @@ public class ReportController {
         List<ReportResponse> responses = reportService.getReport();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    @GetMapping("/general")
+    public ResponseEntity<GeneralReportResponse> getGenenalReport(){
+        GeneralReportResponse response = reportService.getGeneralReport();
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 }

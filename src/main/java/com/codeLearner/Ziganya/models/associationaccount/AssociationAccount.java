@@ -15,6 +15,7 @@ public class AssociationAccount {
     private Double totalAmount;
     private LocalDate cycleStartDate;
     private LocalDate cycleEndDate;
+    private Double interestAmount;
 
     public AssociationAccount() {
     }
@@ -74,5 +75,13 @@ public class AssociationAccount {
 
     public void setCycleEndDate(LocalDate cycleEndDate) {
         this.cycleEndDate = cycleEndDate;
+    }
+
+    public Double getInterestAmount() {
+        return interestAmount;
+    }
+
+    public void setInterestAmount(Double interestAmount) {
+        this.interestAmount = interestAmount;
     }
 }
