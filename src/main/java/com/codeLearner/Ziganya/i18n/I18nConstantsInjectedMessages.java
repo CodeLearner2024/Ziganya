@@ -32,4 +32,5 @@ public class I18nConstantsInjectedMessages {
     public static final String NO_CREDIT_WITHOUT_CONTRIBUTION_KEy="message.element.nocreditwithoutcontribution";
     public static final String ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND_KEY = "message.element.activationaccount.contribution.not.found";
     public static final String ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID_KEY = "message.element.activationaccount.amount.not.valid";
+    public static final String MEMBER_ALREADY_BEGAN_TO_CONTRIBUTE_KEY = "message.element.memberalreadybegancontribu";
 }

@@ -32,6 +32,8 @@ public class I18nConstants {
     public static final String NO_CREDIT_WITHOUT_CONTRIBUTION="message.element.nocreditwithoutcontribution";
     public static final String ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND = "message.element.activationaccount.contribution.not.found";
     public static final String ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID = "message.element.activationaccount.amount.not.valid";
+    public static final String MEMBER_ALREADY_BEGAN_TO_CONTRIBUTE = "message.element.memberalreadybegancontribu";
+
 
 
 

@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.member;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.contribution.ContributionRepository;
 import com.codeLearner.Ziganya.models.settings.AssociationSettings;
 import com.codeLearner.Ziganya.models.settings.AssociationSettingsRepository;
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
@@ -16,11 +17,13 @@ public class MemberServiceImpl implements MemberService {
     private final MemberConverter memberConverter;
     private final MemberRepository memberRepository;
     private final AssociationSettingsRepository associationSettingsRepository;
+    private final ContributionRepository contributionRepository;
 
-    public MemberServiceImpl(MemberConverter memberConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository) {
+    public MemberServiceImpl(MemberConverter memberConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository, ContributionRepository contributionRepository) {
         this.memberConverter = memberConverter;
         this.memberRepository = memberRepository;
         this.associationSettingsRepository = associationSettingsRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     @Override
@@ -82,13 +85,14 @@ public class MemberServiceImpl implements MemberService {
             if (request.getPhoneNumber() != null) {
                 member.setPhoneNumber(request.getPhoneNumber());
             }
-            if (request.getManyOfActions() != null) {
-                member.setManyOfActions(request.getManyOfActions());
+            if (!(request.getManyOfActions().equals(member.getManyOfActions())) && contributionRepository.existsByMemberId(member.getId())) {
+                throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_ALREADY_BEGAN_TO_CONTRIBUTE_KEY, I18nConstants.MEMBER_ALREADY_BEGAN_TO_CONTRIBUTE, I18nConstants.MEMBER_ALREADY_BEGAN_TO_CONTRIBUTE);
             }
             Optional<Member> optionalMember = memberRepository.findByPhoneNumber(request.getPhoneNumber());
             if(optionalMember.isPresent() && !optionalMember.get().getId().equals(id)){
                 throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_PHONE_NUMBER_ALREADY_EXISTS_KEY, I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS, I18nConstants.MEMBER_PHONE_NUMBER_ALREADY_EXISTS);
             }
+
             String phoneNumber = request.getPhoneNumber().trim();
             if (!phoneNumber.matches("^\\+257\\d{8}$")) {
                 throw new UnsupportedOperationException(
