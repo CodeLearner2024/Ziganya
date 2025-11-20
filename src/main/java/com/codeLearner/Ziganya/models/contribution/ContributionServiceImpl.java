@@ -49,22 +49,36 @@ public class ContributionServiceImpl implements ContributionService {
             }
 
             Double penalty = (request.getAmount() * associationSettings.getLatePaymentPenalityInPercentage()) / 100;
-            associationAccount.setInterestAmount(currentInterest + penalty);        } else {
+            associationAccount.setInterestAmount(currentInterest + penalty);
+        } else {
             contribution.setLatePenaltyAmount(0.0);
         }
 
-        Contribution byEmployeeAndMonth = contributionRepository.getContributionByEmployeeIdAndMonth(request.getMemberId(), request.getMonth());
-        if (byEmployeeAndMonth != null && byEmployeeAndMonth.getStatus().equals(ContributionStatus.CONTRIBUTION)) {
-            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_ALREADY_EXISTS_KEY, I18nConstants.CONTRIBUTION_ALREADY_EXISTS, I18nConstants.CONTRIBUTION_ALREADY_EXISTS);
+        List<Contribution> contributions = contributionRepository.getContributionByEmployeeIdAndMonth(
+                request.getMemberId(), request.getMonth()
+        );
+        if (!contributions.isEmpty()) {
+            for (Contribution c : contributions) {
+                if (c.getStatus() == ContributionStatus.CONTRIBUTION) {
+                    throw new UnsupportedOperationException(
+                            I18nConstantsInjectedMessages.CONTRIBUTION_ALREADY_EXISTS_KEY,
+                            I18nConstants.CONTRIBUTION_ALREADY_EXISTS,
+                            I18nConstants.CONTRIBUTION_ALREADY_EXISTS
+                    );
+                }
+            }
         }
         if (request.getContributionDate().isBefore(associationSettings.getCycleStartDate())) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_DATE_NOT_VALID_KEY, I18nConstants.CONTRIBUTION_DATE_NOT_VALID, I18nConstants.CONTRIBUTION_DATE_NOT_VALID);
         }
-        if(!contributionRepository.existsByMemberIdAndStatus(request.getMemberId(), ContributionStatus.ACTIVATION_ACCOUNT) && request.getStatus().equals(ContributionStatus.CONTRIBUTION)){
+        if (!contributionRepository.existsByMemberIdAndStatus(request.getMemberId(), ContributionStatus.ACTIVATION_ACCOUNT) && request.getStatus().equals(ContributionStatus.CONTRIBUTION)) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND_KEY, I18nConstants.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND, I18nConstants.ACTIVATION_ACCOUNT_CONTRIBUTION_NOT_FOUND);
         }
-        if(request.getStatus().equals(ContributionStatus.ACTIVATION_ACCOUNT) && (request.getAmount()> associationSettings.getActivationAccountAmount()*member.getManyOfActions() || request.getAmount()< associationSettings.getActivationAccountAmount()* member.getManyOfActions())){
+        if (request.getStatus().equals(ContributionStatus.ACTIVATION_ACCOUNT) && (request.getAmount() > associationSettings.getActivationAccountAmount() * member.getManyOfActions() || request.getAmount() < associationSettings.getActivationAccountAmount() * member.getManyOfActions())) {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID_KEY, I18nConstants.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID, I18nConstants.ACTIVATION_ACCOUNT_AMOUNT_NOT_VALID);
+        }
+        if (contributionRepository.existsByMemberIdAndMonth(request.getMemberId(), request.getMonth())) {
+            throw new UnsupportedOperationException(I18nConstantsInjectedMessages.CONTRIBUTION_ALREADY_EXISTS_KEY, I18nConstants.CONTRIBUTION_ALREADY_EXISTS, I18nConstants.CONTRIBUTION_ALREADY_EXISTS);
         }
         contribution.setMember(member);
         associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() + request.getAmount());

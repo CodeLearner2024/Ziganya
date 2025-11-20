@@ -22,7 +22,6 @@ public class AssociationSettingsConverter {
     }
 
     public AssociationSettings convertToEntity(AssociationSettingsRequest request){
-
         AssociationSettings associationSettings = new AssociationSettings();
         associationSettings.setContributionAmount(request.getContributionAmount());
         associationSettings.setCycleEndDate(request.getCycleEndDate());

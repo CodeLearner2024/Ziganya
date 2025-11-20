@@ -15,7 +15,7 @@ public interface ContributionRepository extends JpaRepository<Contribution, Long
     List<Contribution> getContributionsByMemberId(Long memberId);
 
     @Query("SELECT c FROM Contribution c WHERE c.member.id = :memberId AND c.month = :month")
-    Contribution getContributionByEmployeeIdAndMonth(Long memberId, Month month);
+    List<Contribution> getContributionByEmployeeIdAndMonth(Long memberId, Month month);
 
     @Query("SELECT COALESCE(SUM(c.amount), 0) FROM Contribution c WHERE FUNCTION('YEAR', c.contributionDate) = FUNCTION('YEAR', CURRENT_DATE)")
     Double sumCurrentYearContributions();
@@ -26,4 +26,7 @@ public interface ContributionRepository extends JpaRepository<Contribution, Long
 
     @Query("select sum(c.amount) from Contribution c where FUNCTION('YEAR', c.contributionDate) = FUNCTION('YEAR', CURRENT_DATE) and c.member.id = :memberId")
     Double sumOfAmountInCurrentYearContributionsByMemberId(Long memberId);
+
+    @Query("SELECT COUNT(c) > 0 FROM Contribution c WHERE c.member.id = :memberId AND c.month = :month")
+    boolean existsByMemberIdAndMonth(Long memberId,Month  month);
 }
