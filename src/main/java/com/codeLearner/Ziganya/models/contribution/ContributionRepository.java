@@ -24,7 +24,7 @@ public interface ContributionRepository extends JpaRepository<Contribution, Long
 
     boolean existsByMemberIdAndStatus(Long memberId, ContributionStatus status);
 
-    @Query("select sum(c.amount) from Contribution c where FUNCTION('YEAR', c.contributionDate) = FUNCTION('YEAR', CURRENT_DATE) and c.member.id = :memberId")
+    @Query("select sum(c.amount) from Contribution c where EXTRACT(YEAR FROM c.contributionDate) = EXTRACT(YEAR FROM CURRENT_DATE) and c.member.id = :memberId")
     Double sumOfAmountInCurrentYearContributionsByMemberId(Long memberId);
 
     @Query("SELECT COUNT(c) > 0 FROM Contribution c WHERE c.member.id = :memberId AND c.month = :month")
