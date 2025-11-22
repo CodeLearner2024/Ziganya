@@ -5,6 +5,7 @@ import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
+import com.codeLearner.Ziganya.models.dashboard.ReportingService;
 import com.codeLearner.Ziganya.models.enums.ContributionStatus;
 import com.codeLearner.Ziganya.models.member.Member;
 import com.codeLearner.Ziganya.models.member.MemberRepository;
@@ -23,13 +24,15 @@ public class ContributionServiceImpl implements ContributionService {
     private final AssociationSettingsRepository associationSettingsRepository;
     private final MemberRepository memberRepository;
     private final AssociationAccountRepository associationAccountRepository;
+    private final ReportingService reportingService;
 
-    public ContributionServiceImpl(ContributionRepository contributionRepository, ContributionConverter contributionConverter, AssociationSettingsRepository associationSettingsRepository, MemberRepository memberRepository, AssociationAccountRepository associationAccountRepository) {
+    public ContributionServiceImpl(ContributionRepository contributionRepository, ContributionConverter contributionConverter, AssociationSettingsRepository associationSettingsRepository, MemberRepository memberRepository, AssociationAccountRepository associationAccountRepository, ReportingService reportingService) {
         this.contributionRepository = contributionRepository;
         this.contributionConverter = contributionConverter;
         this.associationSettingsRepository = associationSettingsRepository;
         this.memberRepository = memberRepository;
         this.associationAccountRepository = associationAccountRepository;
+        this.reportingService = reportingService;
     }
 
     @Override
@@ -84,6 +87,7 @@ public class ContributionServiceImpl implements ContributionService {
         associationAccount.setCurrentAmount(associationAccount.getCurrentAmount() + request.getAmount());
         associationAccount.setTotalAmount(associationAccount.getCurrentAmount() + associationAccount.getLoanBalance());
         associationAccountRepository.save(associationAccount);
+        reportingService.notifyDashboardUpdate();
         Contribution savedContribution = contributionRepository.save(contribution);
         return contributionConverter.convertToResponse(savedContribution);
     }

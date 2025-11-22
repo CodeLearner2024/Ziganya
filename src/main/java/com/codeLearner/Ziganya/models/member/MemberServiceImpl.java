@@ -4,6 +4,7 @@ import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationE
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
 import com.codeLearner.Ziganya.models.contribution.ContributionRepository;
+import com.codeLearner.Ziganya.models.dashboard.ReportingService;
 import com.codeLearner.Ziganya.models.settings.AssociationSettings;
 import com.codeLearner.Ziganya.models.settings.AssociationSettingsRepository;
 import com.codeLearner.Ziganya.util.DeleteOperationResponse;
@@ -18,12 +19,14 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final AssociationSettingsRepository associationSettingsRepository;
     private final ContributionRepository contributionRepository;
+    private final ReportingService reportingService;
 
-    public MemberServiceImpl(MemberConverter memberConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository, ContributionRepository contributionRepository) {
+    public MemberServiceImpl(MemberConverter memberConverter, MemberRepository memberRepository, AssociationSettingsRepository associationSettingsRepository, ContributionRepository contributionRepository, ReportingService reportingService) {
         this.memberConverter = memberConverter;
         this.memberRepository = memberRepository;
         this.associationSettingsRepository = associationSettingsRepository;
         this.contributionRepository = contributionRepository;
+        this.reportingService = reportingService;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
                     I18nConstants.MEMBER_PHONE_NUMBER_INVALID,I18nConstants.MEMBER_PHONE_NUMBER_INVALID);
         }
         Member savedMember = memberRepository.save(member);
+        reportingService.notifyDashboardUpdate();
         return memberConverter.convertToResponse(savedMember);
     }
 
@@ -100,6 +104,7 @@ public class MemberServiceImpl implements MemberService {
                         I18nConstants.MEMBER_PHONE_NUMBER_INVALID,I18nConstants.MEMBER_PHONE_NUMBER_INVALID);
             }
             Member savedMember = memberRepository.save(member);
+
             return memberConverter.convertToResponse(savedMember);
         }).orElseThrow(() -> new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_NOT_FOUND_KEY, I18nConstants.MEMBER_NOT_FOUND, I18nConstants.MEMBER_NOT_FOUND));
     }
@@ -111,6 +116,7 @@ public class MemberServiceImpl implements MemberService {
             throw new UnsupportedOperationException(I18nConstantsInjectedMessages.MEMBER_USED_IN_OTHER_SERVICE_KEY,I18nConstants.MEMBER_USED_IN_OTHER_SERVICE,I18nConstants.MEMBER_USED_IN_OTHER_SERVICE);
         }
         this.memberRepository.deleteById(member.getId());
+        reportingService.notifyDashboardUpdate();
         return new DeleteOperationResponse(true);
     }
 }

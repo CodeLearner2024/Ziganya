@@ -3,6 +3,7 @@ package com.codeLearner.Ziganya.models.associationaccount;
 import com.codeLearner.Ziganya.exceptionhandling.exception.UnsupportedOperationException;
 import com.codeLearner.Ziganya.i18n.I18nConstants;
 import com.codeLearner.Ziganya.i18n.I18nConstantsInjectedMessages;
+import com.codeLearner.Ziganya.models.dashboard.ReportingService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,16 +13,19 @@ import java.util.List;
 public class AssociationAccountServiceImpl implements AssociationAccountService{
     private final AssociationAccountRepository associationAccountRepository;
     private final AssociationAccountConverter associationAccountConverter;
+    private final ReportingService reportingService;
 
-    public AssociationAccountServiceImpl(AssociationAccountRepository associationAccountRepository, AssociationAccountConverter associationAccountConverter) {
+    public AssociationAccountServiceImpl(AssociationAccountRepository associationAccountRepository, AssociationAccountConverter associationAccountConverter, ReportingService reportingService) {
         this.associationAccountRepository = associationAccountRepository;
         this.associationAccountConverter = associationAccountConverter;
+        this.reportingService = reportingService;
     }
 
     @Override
     public AssociationAccountResponse createAssociationAccount(AssociationAccountRequest request) {
         AssociationAccount associationAccount = associationAccountConverter.convertToEntity(request);
         AssociationAccount savedAssociationAccount = associationAccountRepository.save(associationAccount);
+        reportingService.notifyDashboardUpdate();
         return associationAccountConverter.convertToResponse(savedAssociationAccount);
     }
 

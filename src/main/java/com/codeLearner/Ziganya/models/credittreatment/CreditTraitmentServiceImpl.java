@@ -7,6 +7,7 @@ import com.codeLearner.Ziganya.models.associationaccount.AssociationAccount;
 import com.codeLearner.Ziganya.models.associationaccount.AssociationAccountRepository;
 import com.codeLearner.Ziganya.models.credit.Credit;
 import com.codeLearner.Ziganya.models.credit.CreditRepository;
+import com.codeLearner.Ziganya.models.dashboard.ReportingService;
 import com.codeLearner.Ziganya.models.enums.Decision;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,16 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService {
     private final CreditTraitmentConverter creditTraitmentConverter;
     private final CreditRepository creditRepository;
     private final AssociationAccountRepository associationAccountRepository;
+    private final ReportingService reportingService;
 
 
-    public CreditTraitmentServiceImpl(CreditTraitmentRepository creditTraitmentRepository, CreditTraitmentConverter creditTraitmentConverter, CreditRepository creditRepository, AssociationAccountRepository associationAccountRepository) {
+
+    public CreditTraitmentServiceImpl(CreditTraitmentRepository creditTraitmentRepository, CreditTraitmentConverter creditTraitmentConverter, CreditRepository creditRepository, AssociationAccountRepository associationAccountRepository, ReportingService reportingService) {
         this.creditTraitmentRepository = creditTraitmentRepository;
         this.creditTraitmentConverter = creditTraitmentConverter;
         this.creditRepository = creditRepository;
         this.associationAccountRepository = associationAccountRepository;
+        this.reportingService = reportingService;
     }
 
 
@@ -43,6 +47,7 @@ public class CreditTraitmentServiceImpl implements CreditTraitmentService {
             associationAccount.setLoanBalance(associationAccount.getLoanBalance() + credit.getAmount());
             associationAccount.setInterestAmount(associationAccount.getInterestAmount() + (credit.getAmount() * credit.getInterestRate() / 100));
             associationAccountRepository.save(associationAccount);
+            reportingService.notifyDashboardUpdate();
             credit.setCreditDecision(Decision.GRANTED);
             double interestAmount = credit.getAmount() * credit.getInterestRate() / 100;
             credit.setTotalToPay(interestAmount + credit.getAmount());

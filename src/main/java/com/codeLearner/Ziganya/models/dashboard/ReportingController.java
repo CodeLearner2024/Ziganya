@@ -17,8 +17,15 @@ public class ReportingController {
     }
 
     @GetMapping
-    public ResponseEntity<ReportingResponse> getReport(){
+    public ResponseEntity<ReportingResponse> getReport() {
         ReportingResponse response = reportingService.getReporting();
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 🔥 Endpoint pour forcer un push du reporting au dashboard en temps réel
+    @GetMapping("/push")
+    public ResponseEntity<String> pushReportToWebsocket() {
+        reportingService.notifyDashboardUpdate();
+        return ResponseEntity.ok("Dashboard updated and pushed via websocket");
     }
 }
